@@ -1,0 +1,1 @@
+﻿package com.cw.patterns.mediator{	//Colleague Abstract Class	public class Colleague{		public function listenMediator(m:Mediator):void {}		public function doChange(light:String,cname:String):void {}	}}

@@ -1,0 +1,1 @@
+﻿package com.cw.patterns.mediator{	//Mediator Abstract class	public class Mediator{		public function update(light:String,col:String):void {};	}}		
