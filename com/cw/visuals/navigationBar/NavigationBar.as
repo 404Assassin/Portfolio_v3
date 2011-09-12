@@ -39,13 +39,10 @@ package com.cw.visuals.navigationBar {
 			swfHeight = stageReference.stageHeight;
 			trace ('!!!!!!!!!!!!!!!!!!!!!!swfWidth is '+swfWidth);
 			trace ('!!!!!!!!!!!!!!!!!!!!!!swfHeight is '+swfHeight);
-			//theShapeCreator.draw(CreateShape.CIRCLE_OUTLINE, swfStage, 0, main_mc_BGBottomY, 0)
 			var navigationBar:MovieClip = new MovieClip;
 			stageReference.addChild (navigationBar);
-			//navBarArray.push(navigationBar);
 			
 			var navigationBarBG:MovieClip = new MovieClip;
-/*			navigationBarBG.name = 'navigationBarBG';*/
 			navigationBar.addChild (navigationBarBG);
 			navBarContentsArray.push(navigationBarBG);
 			trace ('!!!!!!!!!!!!!!!!!!!!!!navBarArray 0 is '+navBarContentsArray[0]);
