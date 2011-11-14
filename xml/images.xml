@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<siteContent>
+  <LoaderMax name="queue1" maxConnections="2" prependURLs="./images/" load="true">
+    <ImageLoader name="TheRaven_00" url="TheRaven_00.png" estimatedBytes="400"/>
+    <ImageLoader name="TheRaven_01" url="TheRaven_01.png" estimatedBytes="400"/>
+    <ImageLoader name="TheRaven_02" url="TheRaven_02.png" estimatedBytes="400"/>
+    <ImageLoader name="TheRaven_03" url="TheRaven_03.png" estimatedBytes="400"/>
+    <ImageLoader name="TheRaven_04" url="TheRaven_04.png" estimatedBytes="400"/>
+    <ImageLoader name="TheRaven_05" url="TheRaven_05.png" estimatedBytes="400"/>
+    <ImageLoader name="TheRaven_06" url="TheRaven_06.png" estimatedBytes="400"/>
+    <ImageLoader name="TheRaven_07" url="TheRaven_07.png" estimatedBytes="400"/>
+    <ImageLoader name="TheRaven_08" url="TheRaven_08.png" estimatedBytes="400"/>
+  </LoaderMax>
+<!--  <LoaderMax name="thumbnailsLoader" maxConnections="4" load="true" prependURLs="http://www.greensock.com/_img/loadermax/thumbnails/">
+    <ImageLoader name="agencynetThumb" url="agencynet.jpg" estimatedBytes="13000"/>
+    <ImageLoader name="buickThumb" url="buick.jpg" estimatedBytes="13000"/>
+    <ImageLoader name="cocacolaThumb" url="cocacola.jpg" estimatedBytes="13000"/>
+    <ImageLoader name="cu3erThumb" url="cu3er.jpg" estimatedBytes="13000"/>
+    <ImageLoader name="divaThumb" url="diva.jpg" estimatedBytes="13000"/>
+    <ImageLoader name="dowThumb" url="dow.jpg" estimatedBytes="13000"/>
+    <ImageLoader name="flexaThumb" url="flexa.jpg" estimatedBytes="13000"/>
+    <ImageLoader name="happyplanetThumb" url="happyplanetshots.jpg" estimatedBytes="13000"/>
+    <ImageLoader name="holdencruzeThumb" url="holdencruze.jpg" estimatedBytes="13000"/>
+    <ImageLoader name="ironmanThumb" url="ironman.jpg" estimatedBytes="13000"/>
+    <ImageLoader name="mercedesThumb" url="mercedes.jpg" estimatedBytes="13000"/>
+    <ImageLoader name="micromaniacThumb" url="micromaniac.jpg" estimatedBytes="13000"/>
+    <ImageLoader name="overtheatlanticThumb" url="overtheatlantic.jpg" estimatedBytes="13000"/>
+    <ImageLoader name="saabThumb" url="saab.jpg" estimatedBytes="13000"/>
+    <ImageLoader name="silverpistolThumb" url="silverpistol.jpg" estimatedBytes="13000"/>
+    <ImageLoader name="softseThumb" url="soft-se.jpg" estimatedBytes="13000"/>
+    <ImageLoader name="targetThumb" url="target.jpg" estimatedBytes="13000"/>
+    <ImageLoader name="tonydorioThumb" url="tonydorio.jpg" estimatedBytes="13000"/>
+    <ImageLoader name="priusThumb" url="prius.jpg" estimatedBytes="13000"/>
+    <ImageLoader name="waterlifeThumb" url="waterlife.jpg" estimatedBytes="13000"/>
+  </LoaderMax>
+  <LoaderMax name="imagesLoader" maxConnections="2" prependURLs="http://www.greensock.com/_img/loadermax/full_size/">
+    <ImageLoader name="agencynetImage" url="agencynet.jpg" estimatedBytes="180000" noCache="true"/>
+    <ImageLoader name="buickImage" url="buick.jpg" estimatedBytes="180000" noCache="true"/>
+    <ImageLoader name="cocacolaImage" url="cocacola.jpg" estimatedBytes="180000" noCache="true"/>
+    <ImageLoader name="cu3erImage" url="cu3er.jpg" estimatedBytes="180000" noCache="true"/>
+    <ImageLoader name="divaImage" url="diva.jpg" estimatedBytes="180000" noCache="true"/>
+    <ImageLoader name="dowImage" url="dow.jpg" estimatedBytes="180000" noCache="true"/>
+    <ImageLoader name="flexaImage" url="flexa.jpg" estimatedBytes="180000" noCache="true"/>
+    <ImageLoader name="happyplanetImage" url="happyplanetshots.jpg" estimatedBytes="180000" noCache="true"/>
+    <ImageLoader name="holdencruzeImage" url="holdencruze.jpg" estimatedBytes="180000" noCache="true"/>
+    <ImageLoader name="ironmanImage" url="ironman.jpg" estimatedBytes="180000" noCache="true"/>
+    <ImageLoader name="mercedesImage" url="mercedes.jpg" estimatedBytes="180000" noCache="true"/>
+    <ImageLoader name="micromaniacImage" url="micromaniac.jpg" estimatedBytes="180000" noCache="true"/>
+    <ImageLoader name="overtheatlanticImage" url="overtheatlantic.jpg" estimatedBytes="180000" noCache="true"/>
+    <ImageLoader name="saabImage" url="saab.jpg" estimatedBytes="180000" noCache="true"/>
+    <ImageLoader name="silverpistolImage" url="silverpistol.jpg" estimatedBytes="180000" noCache="true"/>
+    <ImageLoader name="softseImage" url="soft-se.jpg" estimatedBytes="180000" noCache="true"/>
+    <ImageLoader name="targetImage" url="target.jpg" estimatedBytes="180000" noCache="true"/>
+    <ImageLoader name="tonydorioImage" url="tonydorio.jpg" estimatedBytes="180000" noCache="true"/>
+    <ImageLoader name="priusImage" url="prius.jpg" estimatedBytes="180000" noCache="true"/>
+    <ImageLoader name="waterlifeImage" url="waterlife.jpg" estimatedBytes="180000" noCache="true"/>
+  </LoaderMax>-->
+</siteContent>
