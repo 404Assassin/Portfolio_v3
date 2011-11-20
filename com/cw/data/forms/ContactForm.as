@@ -14,6 +14,7 @@ package com.cw.data.forms{
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	
 	import com.cw.controls.dynamicButton.DynamicButton;
+	import com.cw.controls.prompt.CErrorPopUp;
 	import com.cw.controls.prompt.ErrorPopUp;
 	import com.cw.data.forms.CreateInputTextField;
 	import com.cw.data.regularExpressions.EmailCheck;
@@ -162,7 +163,7 @@ package com.cw.data.forms{
 		}
 		private function emailInputField():void{
 			var emailInputField:CreateInputTextField = new CreateInputTextField();
-			emailInputField.createInputTextFieldInterface(10, 35, 339, 20);
+			emailInputField.createInputTextFieldInterface(10, 35, nameTextFieldX, 20);
 			emailInput = emailInputField.getInputTextField();
 			emailInput.multiline = false;
 			emailInput.wordWrap = false;
@@ -174,7 +175,7 @@ package com.cw.data.forms{
 		}
 		private function messageInputField():void{
 			var messageInputField:CreateInputTextField = new CreateInputTextField();
-			messageInputField.createInputTextFieldInterface(10, 60, 339, 275);
+			messageInputField.createInputTextFieldInterface(10, 60, nameTextFieldX, 275);
 			messageInput = messageInputField.getInputTextField();
 			messageInput.multiline = true;
 			messageInput.wordWrap = true;
@@ -292,8 +293,14 @@ package com.cw.data.forms{
 			theContactFormData.contactFormDataInterface("http://worleydev.com/test/portfolio_v3/mail.php", nameData, emailData, messageData)
 		}
 		private function nameValidationError():void {
-			nameErrorPopUp.errorPopUpInterface(formContentsArray[0], nameErrorX, nameErrorY, errorNameText);
-			nameErrorPopUp.lineInterface(-nameTextFieldX*.5/*-165*/, 35);
+			var theCErrorPopUp:CErrorPopUp = new CErrorPopUp();
+			var nameCErrorPopUp:Sprite = theCErrorPopUp.getErrorPopUp()
+			theCErrorPopUp.errorPopUpInterface(errorNameText);
+			theCErrorPopUp.lineInterface(-nameTextFieldX*.5, -nameTextFieldY*.5);
+			formContentsArray[0].addChild(nameCErrorPopUp);
+			TweenMax.to (nameCErrorPopUp, 0, {x:nameErrorX, y:nameErrorY});
+/*			nameErrorPopUp.errorPopUpInterface(formContentsArray[0], nameErrorX, nameErrorY, errorNameText);
+			nameErrorPopUp.lineInterface(-165, 35);*/
 		}
 		private function emailValidationError():void {
 			nameErrorPopUpHeight = nameErrorPopUp.getErrorPopUpHeight()
