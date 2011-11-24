@@ -14,6 +14,7 @@ package com.cw.visuals.contentArea{
 	// Imports
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	import com.cw.controls.dynamicButton.CDynamicButton;
+	import com.cw.data.javascript.Shadowbox;
 	import com.cw.utilities.preloaders.CFourBarPreloader;
 	import com.cw.visuals.flipOpen3D.CFlipOpen3Dv1;
 	import com.cw.visuals.flipOpen3D.CFlipOpen3Dv2;
@@ -45,8 +46,9 @@ package com.cw.visuals.contentArea{
 	// Class
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	public class ItemView{
-		
-		//public var closeButton:Sprite;
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		// Public Variables
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		public var closeButtonHolder:Sprite = new Sprite();
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Private Variables
@@ -56,7 +58,7 @@ package com.cw.visuals.contentArea{
 		private var stageReference:Stage;
 		private var stageWidth:int;
 		private var stageHeight:int;
-		private var imageName:String = 'ph_';
+		private var imageName:String/* = 'ph_'*/;
 		private var returnedObject:Sprite = new Sprite();
 		private var section:String;
 		private var sectionIteration:int;
@@ -74,22 +76,18 @@ package com.cw.visuals.contentArea{
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Constructor
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		public function ItemView(){};
+		public function ItemView(){}
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Public Interfaces
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		public function itemViewInterface(sectionName:String, sectionIteration:int, stageReference:Stage, currentItem:Object):void{
 			this.sectionName = sectionName;
 			this.sectionIteration = sectionIteration;
-			this.imageName = imageName;
+			this.imageName = sectionName + sectionIteration + '_'
 			this.stageReference = stageReference;
 			this.stageWidth = stageReference.stageWidth;
 			this.stageHeight = stageReference.stageHeight;
 			this.currentItem = currentItem;
-			
-			trace("@ ItemView.itemViewInterface(sectionName, sectionIteration, stageReference, currentItem) " + '\n' + currentItem.width + '\n' + currentItem.x + '\n' + currentItem.y + '\n' + sectionIteration);
-			
-			
 			setImageName();
 		}
 		public function getItemView():Sprite{
@@ -99,7 +97,7 @@ package com.cw.visuals.contentArea{
 		// Private Methods
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		// Keep this incase we want to add a DL here
+		// Keep incase we want to add an individual item DL here.
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		/*		private function createName():void {
 		section = sectionName + sectionIteration;
@@ -131,7 +129,8 @@ package com.cw.visuals.contentArea{
 		addItemView();
 		}*/
 		private function setImageName():void {
-			sampleImage = imageName + '0'
+			sampleImage = sectionName + sectionIteration + '_'+ '0';
+			trace("@ ItemView.setImageName() "+ sampleImage);
 			theImage = LoaderMax.getContent(sampleImage).rawContent;
 			backgroundWidth = (theImage.width * 3) + itemBackgroundBorder;
 			backgroundHeight = (theImage.height * 3) + itemBackgroundBorder;
@@ -186,7 +185,7 @@ package com.cw.visuals.contentArea{
 		}
 		private function addItemView():void{
 			var theCFlipOpen3Dv1:CFlipOpen3Dv3 = new CFlipOpen3Dv3();
-			theCFlipOpen3Dv1.setCFlip3D('ph_', 100, 100);
+			theCFlipOpen3Dv1.setCFlip3D(imageName, 100, 100);
 			var motionDirectory:Sprite = theCFlipOpen3Dv1.getCFlipOpen3D();
 			returnedObject.addChild(motionDirectory);
 			TweenMax.to(motionDirectory, 0, {alpha:0, z:-35});
@@ -195,10 +194,13 @@ package com.cw.visuals.contentArea{
 		}
 		private function addButtons():void {
 			addCloseButton();
-			
 			stageReference.addEventListener( FullScreenEvent.FULL_SCREEN, fullScreenHandler );
 			fullScreenHandler(undefined)
 		}
+		/**
+		 * @param full screen event do not add external link button since external
+		 * linking functionality is disabled while full screen.
+		 */		
 		private function fullScreenHandler(event:FullScreenEvent):void {
 			if (stageReference.displayState == StageDisplayState.NORMAL) {
 				addLinkButton();
@@ -208,9 +210,8 @@ package com.cw.visuals.contentArea{
 		}
 		private function addCloseButton():void{
 			theCDynamicButton = new CDynamicButton();
-			theCDynamicButton.buttonInterface('<bttn>CLOSE</bttn>')
+			theCDynamicButton.buttonInterface(theButtonText('buttonClose'))
 			var closeButton:Sprite = theCDynamicButton.getTheButton();
-			//closeButton = theCDynamicButton.getTheButton();
 			var closeButtonX = (theImage.width *.5);
 			var closeButtonY = (backgroundHeight*.5)+20 ;
 			TweenMax.to (closeButton, 0, {alpha:1, x:closeButtonX, y:closeButtonY, z:-30});
@@ -226,8 +227,7 @@ package com.cw.visuals.contentArea{
 		}
 		private function addLinkButton():void{
 			theCDynamicButton = new CDynamicButton();
-			//var linkButtonHolder:MovieClip = new MovieClip();
-			theCDynamicButton.buttonInterface('<bttn>VIEW</bttn>')
+			theCDynamicButton.buttonInterface(theButtonText('buttonView'));
 			linkButton = theCDynamicButton.getTheButton();
 			var linkButtonX = (theImage.width *.5);
 			var linkButtonY = -theImage.height-7;
@@ -237,8 +237,26 @@ package com.cw.visuals.contentArea{
 			linkButton.addEventListener (MouseEvent.MOUSE_UP, linkButtonUp);
 		}
 		private function linkButtonUp(upEvent:Event):void{
-			
-			
+			var currentSection:String = sectionName + '_' + sectionIteration;
+			var sectionItem:LoaderMax = LoaderMax.getLoader(currentSection);
+			var content:String = sectionItem.vars.content;
+			var title:String = sectionItem.vars.title;
+			var width:int = sectionItem.vars.width;
+			var height:int = sectionItem.vars.height;
+			var type:String = sectionItem.vars.type;
+			Shadowbox.overlayOpacity = .97;
+			Shadowbox.overlayColor = '#000000';
+			Shadowbox.instance.open(content, title, width, height, type);
+		}
+		/**
+		 * Method for returning button text. Pass it a refrence of the nodes 'name'
+		 */
+		private function theButtonText(nodeName:String):String {
+			var buttonContent:LoaderMax = LoaderMax.getLoader(nodeName);
+			var buttonText:String = buttonContent.vars.text;
+			var buttonTag:String = buttonContent.vars.cssTag;
+			var button:String = '<'+buttonTag+'>'+buttonText+'</'+buttonTag+'>';
+			return button;
 		}
 		private function removeLinkButton():void{
 			returnedObject.removeChild(linkButton);
