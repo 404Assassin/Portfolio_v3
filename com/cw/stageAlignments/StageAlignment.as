@@ -1,5 +1,5 @@
 package com.cw.stageAlignments{
-	/*
+	/**
 	-=] StageAlignment document class for the CW D&D [=-
 	-=] language version ActionScript 3.0 [=-
 	-=] player version Flash 10.0 [=-
@@ -7,9 +7,9 @@ package com.cw.stageAlignments{
 	-=] created 06/2011 [=-
 	-=] TODO: 
 	*/
-	//:::::::::::::::::::::::::::::::::::::::::::::::::
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	// Imports
-	//:::::::::::::::::::::::::::::::::::::::::::::::::
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	import com.cw.stageAlignments.StageResize;
 	import com.cw.visuals.tweenStates.ButtonStates;
 	import com.cw.visuals.mouseStates;
@@ -18,16 +18,16 @@ package com.cw.stageAlignments{
 	import flash.display.MovieClip;
 	import flash.display.Stage;
 	import flash.events.*;
-	//:::::::::::::::::::::::::::::::::::::::::::::::::
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	// Class characteristics
-	//:::::::::::::::::::::::::::::::::::::::::::::::::
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	public class StageAlignment implements IStageAlignment {
-		//:::::::::::::::::::::::::::::::::::::::::::::::::
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Public Variables
-		//:::::::::::::::::::::::::::::::::::::::::::::::::
-		//:::::::::::::::::::::::::::::::::::::::::::::::::
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Private Variables
-		//:::::::::::::::::::::::::::::::::::::::::::::::::
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		private var evt:String;
 		private var target_mc:MovieClip;
 		private var targetValue:String
@@ -51,34 +51,35 @@ package com.cw.stageAlignments{
 		private var leftStageBorderBuffer:Number = 5;
 		private var rightStageBorderBuffer:Number = 5;
 		private var bottomStageBorderBuffer:Number = 30;
-		//:::::::::::::::::::::::::::::::::::::::::::::::::
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Constructor
-		//:::::::::::::::::::::::::::::::::::::::::::::::::
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		public function StageAlignment(){
 			StageResizeHandler.StageAlignmentChange('4');
 		}
-		public function addStageAlignmentEventListeners(stageReference:Stage, theMainMC:MovieClip):void{
+		public function addStageAlignmentEventListeners(stageReference:Stage, mainMC:MovieClip):void{
 			this.theStageReference = stageReference;
-			mainMC = theMainMC;
+			this.swfWidth = theStageReference.stageWidth;
+			this.swfHeight = theStageReference.stageHeight;
+			this.mainMC = mainMC;
 			initEvents ();
 			StageResizeHandler.addStageResizeEventListener(theStageReference, mainMC)
 		}
-		//:::::::::::::::::::::::::::::::::::::::::::::::::
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Alignment buttons iterative MouseEvents build
-		//:::::::::::::::::::::::::::::::::::::::::::::::::
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		private function initEvents (){
 			for (var k:Number = 0; k < alignment_bttn_count; k++) {
 				var alignment_bttn_iterator = 'alignment_bttn_' + String(k);
-				trace (mainMC[alignment_bttn_iterator].name);
-				mainMC[alignment_bttn_iterator].buttonTarget.addEventListener (MouseEvent.MOUSE_UP, onAlignmentBttnUp);
-				mainMC[alignment_bttn_iterator].buttonTarget.addEventListener (MouseEvent.MOUSE_OVER, onAlignmentBttnOver);
-				mainMC[alignment_bttn_iterator].buttonTarget.addEventListener (MouseEvent.MOUSE_DOWN, onAlignmentBttnDown);
-				mainMC[alignment_bttn_iterator].buttonTarget.addEventListener (MouseEvent.MOUSE_OUT, onAlignmentBttnRollOut);
+				//trace (mainMC.StageAlignmentButtons[alignment_bttn_iterator].name);
+				mainMC.StageAlignmentButtons[alignment_bttn_iterator].buttonTarget.buttonMode = true;
+				mainMC.StageAlignmentButtons[alignment_bttn_iterator].buttonTarget.addEventListener (MouseEvent.MOUSE_UP, onAlignmentBttnUp);
+				mainMC.StageAlignmentButtons[alignment_bttn_iterator].buttonTarget.addEventListener (MouseEvent.MOUSE_OVER, onAlignmentBttnOver);
+				mainMC.StageAlignmentButtons[alignment_bttn_iterator].buttonTarget.addEventListener (MouseEvent.MOUSE_DOWN, onAlignmentBttnDown);
+				mainMC.StageAlignmentButtons[alignment_bttn_iterator].buttonTarget.addEventListener (MouseEvent.MOUSE_OUT, onAlignmentBttnRollOut);
 			}
 		}
 		private function onAlignmentBttnUp (alignmentBttnMouseEvent:MouseEvent):void {
-			this.swfWidth = theStageReference.stageWidth;
-			this.swfHeight = theStageReference.stageHeight;
 			this.my_current_x = (mainMC.x-10);
 			var animeTarget:MovieClip = MovieClip(alignmentBttnMouseEvent.target.parent);
 			fullscreenButtonStates.buttonStatesInterface(animeTarget.circle, 'UpState')
@@ -87,7 +88,9 @@ package com.cw.stageAlignments{
 			targetValue = targetValue.slice(-1,targetValue.length);
 			this.stageCurrentAlignment = stageCurrentAlignment;
 			StageResizeHandler.StageAlignmentChange(targetValue);
-			//trace('::::::::::::::What is the value of targetValue: '+targetValue);
+			swfWidth = theStageReference.stageWidth;
+			swfHeight = theStageReference.stageHeight;
+			////trace('::::::::::::::What is the value of targetValue: '+targetValue);
 			if ('0' == targetValue) {
 				stageCurrentAlignment = '0';
 				TweenMax.to (mainMC, 1, {x:stageBorderBuffer+(mainMC.width*.5), y:stageBorderBuffer+(mainMC.height*.5), ease:Sine.easeOut});

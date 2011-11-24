@@ -15,6 +15,7 @@ package com.cw.controls.prompt{
 	import com.cw.patterns.observer.IInvokedObserver;
 	import com.cw.patterns.observer.InvokedObserver;
 	import com.cw.visuals.animations.SimpleLine;
+	import com.cw.visuals.animations.CSimpleLine;
 	import com.cw.visuals.shapeCreators.CreateShape;
 	import com.cw.visuals.tweenStates.ButtonStates;
 	import com.greensock.TweenMax;
@@ -25,6 +26,7 @@ package com.cw.controls.prompt{
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.filters.DropShadowFilter;
+	import flash.geom.Point;
 	import flash.text.AntiAliasType;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
@@ -212,6 +214,7 @@ package com.cw.controls.prompt{
 		}
 		private function removeFromDisplay():void{
 			if (placementTarget.contains(contentHolder)){
+				trace("@ ErrorPopUp.removeFromDisplay() ");
 				placementTarget.removeChild(contentHolder);
 				TweenMax.to (contentHolder, .75, {alpha:0, ease:Sine.easeOut});
 				errorState = false;

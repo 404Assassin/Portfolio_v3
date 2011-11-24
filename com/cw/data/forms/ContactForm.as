@@ -22,16 +22,18 @@ package com.cw.data.forms{
 	import com.cw.patterns.observer.IInvokedObserver;
 	import com.cw.patterns.observer.InvokedObserver;
 	import com.cw.visuals.animations.SimpleLine;
+	import com.cw.visuals.animations.CSimpleLine;
 	import com.cw.visuals.shapeCreators.CreateShape;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Sine;
 	import com.greensock.loading.LoaderMax;
-	
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.FocusEvent;
 	import flash.events.KeyboardEvent;
+	import flash.geom.Point;
+	import flash.geom.Vector3D;
 	import flash.text.AntiAliasType;
 	import flash.text.GridFitType;
 	import flash.text.TextField;
@@ -53,6 +55,7 @@ package com.cw.data.forms{
 		private var placementTarget:MovieClip;
 		private var rotationAmount:int = 180;
 		private var theDynamicButton:DynamicButton;
+		private var theSubmitButton:Sprite;
 		private var dynamicButtonObserver:InvokedObserver = new InvokedObserver();
 		private var nameErrorPopUp:ErrorPopUp = new ErrorPopUp();
 		private var emailErrorPopUp:ErrorPopUp = new ErrorPopUp();
@@ -74,8 +77,8 @@ package com.cw.data.forms{
 		private var nameTextFieldY:int = 20;
 		private var errorFieldBufferX:int = 10;
 		private var errorFieldBufferY:int = 10;
-		private var nameErrorX:int = 215;
-		private var nameErrorY:int = -15;
+		private var nameErrorX:int = 225;
+		private var nameErrorY:int = 5;
 /*		private var emailErrorX:int = 195;
 		private var emailErrorY:int = -25;
 		private var messageErrorX:int = 195;
@@ -124,8 +127,8 @@ package com.cw.data.forms{
 		}
 		private function addFormHolder():void {
 			contactFormHolder = new MovieClip();
-			formContentsArray.push(contactFormHolder);
-			TweenMax.to (formContentsArray[0], 0, {alpha:0, x:465, y:-190, rotationY:rotationAmount});
+			//formContentsArray.push(contactFormHolder);
+			TweenMax.to (contactFormHolder, 0, {alpha:0, x:465, y:-190, rotationY:rotationAmount});
 			placementTarget.content_stage.addChild(contactFormHolder);
 			addFormHolderBackground();
 		}
@@ -134,7 +137,7 @@ package com.cw.data.forms{
 			var theShapeCreator:CreateShape = new CreateShape();
 			theShapeCreator.draw(CreateShape.SQUARE_FILLED, contactFormBackgroundHolder, 0, 0, 360, 380)
 			TweenMax.to (contactFormBackgroundHolder, 0, {alpha:.5, tint:0x000000});
-			formContentsArray[0].addChild(contactFormBackgroundHolder);
+			contactFormHolder.addChild(contactFormBackgroundHolder);
 			nameInputField();
 			emailInputField();
 			messageInputField();
@@ -156,7 +159,7 @@ package com.cw.data.forms{
 			nameInput.multiline = false;
 			nameInput.wordWrap = false;
 			nameInput.text = defaultNameText;
-			formContentsArray[0].addChild(nameInput);
+			contactFormHolder.addChild(nameInput);
 			nameInput.addEventListener(FocusEvent.FOCUS_IN,nameInputHandler);
 			nameInput.addEventListener(FocusEvent.FOCUS_OUT,nameInputHandler);
 			nameInput.addEventListener(KeyboardEvent.KEY_DOWN, enterKeyHandler);
@@ -168,7 +171,7 @@ package com.cw.data.forms{
 			emailInput.multiline = false;
 			emailInput.wordWrap = false;
 			emailInput.text = defaultEmailText;
-			formContentsArray[0].addChild(emailInput);
+			contactFormHolder.addChild(emailInput);
 			emailInput.addEventListener(FocusEvent.FOCUS_IN,emailInputHandler);
 			emailInput.addEventListener(FocusEvent.FOCUS_OUT,emailInputHandler);
 			emailInput.addEventListener(KeyboardEvent.KEY_DOWN, enterKeyHandler);
@@ -180,7 +183,7 @@ package com.cw.data.forms{
 			messageInput.multiline = true;
 			messageInput.wordWrap = true;
 			messageInput.text = defaultMessageText;
-			formContentsArray[0].addChild(messageInput);
+			contactFormHolder.addChild(messageInput);
 			messageInput.addEventListener(FocusEvent.FOCUS_IN,messageInputHandler);
 			messageInput.addEventListener(FocusEvent.FOCUS_OUT,messageInputHandler);
 			messageInput.addEventListener(KeyboardEvent.KEY_DOWN, enterKeyHandler);
@@ -188,15 +191,14 @@ package com.cw.data.forms{
 		private function submitButton():void{
 			theDynamicButton = new DynamicButton();
 			theDynamicButton.observableInstanceRef(dynamicButtonObserver);
-			theDynamicButton.buttonInterface(formContentsArray[0], 0, 0, theCSSTextContent('buttonSend'))
-			var submitButton:Sprite = theDynamicButton.getTheButton();
-			TweenMax.to (submitButton, 0, {alpha:0, x:300, y:345});
-			formContentsArray.push(submitButton);
+			theDynamicButton.buttonInterface(contactFormHolder, 0, 0, theCSSTextContent('buttonSend'))
+			theSubmitButton = theDynamicButton.getTheButton();
+			TweenMax.to (theSubmitButton, 0, {alpha:0, x:300, y:345});
 			formBuild();
 		}
 		private function formBuild():void{
-			TweenMax.to (formContentsArray[0], .75, {delay:1, alpha:1, x:465, y:-165, ease:Sine.easeOut});
-			TweenMax.to (formContentsArray[1], .75, {delay:.75, alpha:1, x:300, y:345, ease:Sine.easeOut});
+			TweenMax.to (contactFormHolder, .75, {delay:1, alpha:1, x:465, y:-165, ease:Sine.easeOut});
+			TweenMax.to (theSubmitButton, .75, {delay:.75, alpha:1, x:300, y:345, ease:Sine.easeOut});
 		}
 		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Form validation logic
@@ -279,7 +281,7 @@ package com.cw.data.forms{
 		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		public function update(theObserver:InvokedObserver, infoObject:Object):void{
 			emailSubmit(emailData);
-			if(infoObject == 'submitButton'){
+			if(infoObject == 'theSubmitButton'){
 				emailSubmit(emailData);
 			}
 		}
@@ -292,29 +294,26 @@ package com.cw.data.forms{
 			var theContactFormData:ContactFormData = new ContactFormData();
 			theContactFormData.contactFormDataInterface("http://worleydev.com/test/portfolio_v3/mail.php", nameData, emailData, messageData)
 		}
+		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		// Form data error handles
+		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		private function nameValidationError():void {
-			var theCErrorPopUp:CErrorPopUp = new CErrorPopUp();
-			var nameCErrorPopUp:Sprite = theCErrorPopUp.getErrorPopUp()
-			theCErrorPopUp.errorPopUpInterface(errorNameText);
-			theCErrorPopUp.lineInterface(-nameTextFieldX*.5, -nameTextFieldY*.5);
-			formContentsArray[0].addChild(nameCErrorPopUp);
-			TweenMax.to (nameCErrorPopUp, 0, {x:nameErrorX, y:nameErrorY});
-/*			nameErrorPopUp.errorPopUpInterface(formContentsArray[0], nameErrorX, nameErrorY, errorNameText);
-			nameErrorPopUp.lineInterface(-165, 35);*/
+			nameErrorPopUp.errorPopUpInterface(contactFormHolder, nameErrorX, nameErrorY, errorNameText);
+			nameErrorPopUp.lineInterface(-215, 6);
 		}
 		private function emailValidationError():void {
 			nameErrorPopUpHeight = nameErrorPopUp.getErrorPopUpHeight()
 			var emailErrorY:int = nameErrorY + nameErrorPopUpHeight + errorFieldBufferY
 			trace("@ ContactForm.emailValidationError() nameErrorPopUpHeight "+ nameErrorPopUpHeight);
-			emailErrorPopUp.errorPopUpInterface(formContentsArray[0], nameErrorX, emailErrorY, errorEmailText);
-			emailErrorPopUp.lineInterface(-165, 20);
+			emailErrorPopUp.errorPopUpInterface(contactFormHolder, nameErrorX, emailErrorY, errorEmailText);
+			emailErrorPopUp.lineInterface(-215, -23);
 		}
 		private function messageValidationError():void {
-			emailErrorPopUpHeight = emailErrorPopUp.getErrorPopUpHeight()
+			emailErrorPopUpHeight = 44
 			var messageErrorY:int = nameErrorY + nameErrorPopUpHeight + errorFieldBufferY + emailErrorPopUpHeight + errorFieldBufferY
 			trace("@ ContactForm.messageValidationError() emailErrorPopUpHeight "+ emailErrorPopUpHeight);
-			messageErrorPopUp.errorPopUpInterface(formContentsArray[0], nameErrorX, messageErrorY, errorMessageText);
-			messageErrorPopUp.lineInterface(-165, 5);
+			messageErrorPopUp.errorPopUpInterface(contactFormHolder, nameErrorX, messageErrorY, errorMessageText);
+			messageErrorPopUp.lineInterface(-215, -52);
 		}
 		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Support functions

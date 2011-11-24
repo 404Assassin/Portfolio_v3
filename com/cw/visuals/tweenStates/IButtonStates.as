@@ -1,9 +1,9 @@
 package com.cw.visuals.tweenStates{
-	//:::::::::::::::::::::::::::::::::::::::::::::::::
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	// Imports
-	//:::::::::::::::::::::::::::::::::::::::::::::::::
-	import flash.display.MovieClip;
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	import flash.display.Sprite;
 	internal interface IButtonStates{
-		function buttonStatesInterface(animeTarget:MovieClip, actionType:String):void;
+		function buttonStatesInterface(animeTarget:Sprite, actionType:String):void;
 	}
 }

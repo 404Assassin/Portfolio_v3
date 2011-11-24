@@ -1,5 +1,5 @@
 package com.cw.controls.fullscreenButton{
-	/*
+	/**
 	-=] Full Screen Button [=-
 	-=] language version ActionScript 3.0 [=-
 	-=] player version Flash 10.0 [=-
@@ -7,9 +7,9 @@ package com.cw.controls.fullscreenButton{
 	-=] created 09/2011 [=-
 	-=] TODO;  [=-
 	*/
-	//:::::::::::::::::::::::::::::::::::::::::::::::::
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	// Imports
-	//:::::::::::::::::::::::::::::::::::::::::::::::::
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	import com.cw.utilities.FullScreenToggle;
 	import com.cw.visuals.tweenStates.ButtonStates;
 	import flash.display.StageDisplayState;
@@ -18,22 +18,21 @@ package com.cw.controls.fullscreenButton{
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	
-	//:::::::::::::::::::::::::::::::::::::::::::::::::
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	// Class characteristics
-	//:::::::::::::::::::::::::::::::::::::::::::::::::
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	public class FullscreenButton implements IFullscreenButton{
-		//:::::::::::::::::::::::::::::::::::::::::::::::::
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Private Variables
-		//:::::::::::::::::::::::::::::::::::::::::::::::::
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		private var fullscreenButton:bttn_fullscreen = new bttn_fullscreen();
 		private var fullscreenButtonStates:ButtonStates = new ButtonStates();
 		private var fullScreenToggler:FullScreenToggle = new FullScreenToggle();
 		private var theStageReference:Stage;
 		private var placementTarget:MovieClip;
-		//:::::::::::::::::::::::::::::::::::::::::::::::::
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Constructor
-		//:::::::::::::::::::::::::::::::::::::::::::::::::
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		public function FullscreenButton(){
 		}
 		public function fullscreenButtonInterface(stageReference:Stage, placementTarget:MovieClip):void{
@@ -52,15 +51,16 @@ package com.cw.controls.fullscreenButton{
 		private function addTheButtonEvents():void {
 			addFullScreenEventListener();
 			theStageReference.addEventListener(Event.RESIZE, changeInDisplayState);
+			fullscreenButton.buttonTarget.buttonMode = true;
 			fullscreenButton.buttonTarget.addEventListener (MouseEvent.MOUSE_UP, placementTargetUp);
 			fullscreenButton.buttonTarget.addEventListener (MouseEvent.MOUSE_DOWN, placementTargetDown);
 			fullscreenButton.buttonTarget.addEventListener (MouseEvent.MOUSE_OUT, placementTargetOut);
 			fullscreenButton.buttonTarget.addEventListener (MouseEvent.MOUSE_OVER, placementTargetOver);
 		}
 		private function addFullScreenEventListener():void{
-			//:::::::::::::::::::::::::::::::::::::::::::::::::
+			//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 			// adds the fullScreenEventListener and pass it the targeted object and a stage reference
-			//:::::::::::::::::::::::::::::::::::::::::::::::::
+			//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 			fullScreenToggler.fullScreenEventListener(fullscreenButton.buttonTarget, theStageReference);
 		}
 		private function placementTargetOver(overEvent:Event){

@@ -35,10 +35,10 @@ package com.cw.data.bitmaps{
 		public function LoadBitmap(imageSourceRefrence:String, placementTarget:MovieClip, placementX:Number, placementY:Number){
 			var loader:Loader = new Loader();
 			addEventListeners(loader.contentLoaderInfo);
-			trace('::::::what is imageSourceRefrence '+ imageSourceRefrence);
-			trace('::::::what is placementTarget '+ placementTarget);
-			trace('::::::what is placementX '+ placementX);
-			trace('::::::what is placementY '+ placementY);
+			//trace('::::::what is imageSourceRefrence '+ imageSourceRefrence);
+			//trace('::::::what is placementTarget '+ placementTarget);
+			//trace('::::::what is placementX '+ placementX);
+			//trace('::::::what is placementY '+ placementY);
 			placementTarget.addChild(loader);
 			//:::::::::::::::::::::::::::::::::::::::::::::::::
 			// load the external bitmap
@@ -55,13 +55,13 @@ package com.cw.data.bitmaps{
 			dispatcher.addEventListener(Event.COMPLETE, handleCompleteEvent);
 			dispatcher.addEventListener(HTTPStatusEvent.HTTP_STATUS, httpStatusHandler);
 			dispatcher.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
-			dispatcher..addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, handleUncaughtError);
+			dispatcher.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, handleUncaughtError);
 		}
 		//:::::::::::::::::::::::::::::::::::::::::::::::::
 		// create preloader
 		//:::::::::::::::::::::::::::::::::::::::::::::::::
 		private function handleOpenEvent(event:Event):void{
-			trace('opening');
+			//trace('opening');
 			preloaderState = new TextField();
 			addChild(preloaderState);
 			preloaderState.text = 'loading: 0%';
@@ -71,17 +71,17 @@ package com.cw.data.bitmaps{
 		//:::::::::::::::::::::::::::::::::::::::::::::::::
 		private  function handleProgressEvent(event:ProgressEvent):void{
 			var percentageLoaded:Number = event.bytesLoaded / event.bytesTotal * 100;
-			trace('progress, what is the percentage loaded = ' + percentageLoaded);
+			//trace('progress, what is the percentage loaded = ' + percentageLoaded);
 			preloaderState.text = 'loading: ' + percentageLoaded + '%';
 		}
 		private function initHandler(event:Event):void {
-			trace("initHandler - bitmaps can now accessed");
+			//trace("initHandler - bitmaps can now accessed");
 		}
 		//:::::::::::::::::::::::::::::::::::::::::::::::::
 		// garbage collection on preloader assets
 		//:::::::::::::::::::::::::::::::::::::::::::::::::
 		private function handleCompleteEvent(event:Event):void{
-			trace('bitmap load complete!');
+			//trace('bitmap load complete!');
 			removeChild(preloaderState);
 			preloaderState = null;
 		}
@@ -89,10 +89,10 @@ package com.cw.data.bitmaps{
 		// garbage collection on preloader assets
 		//:::::::::::::::::::::::::::::::::::::::::::::::::
 		private function handleIOError(event:IOErrorEvent):void{
-			trace('::::IO Error Event '+ event);
+			//trace('::::IO Error Event '+ event);
 		}
 		private function httpStatusHandler(event:HTTPStatusEvent):void {
-			trace("httpStatusHandler: " + event);
+			//trace("httpStatusHandler: " + event);
 		}
 		private function handleUncaughtError(event:UncaughtErrorEvent):void{
 			if (event.error is Error){

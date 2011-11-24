@@ -5,12 +5,9 @@ package com.cw.visuals.navigationBar {
 	import com.cw.stageAlignments.StageAlignmentBottom;
 	import com.cw.visuals.shapeCreators.CreateShape;
 	import com.cw.controls.fullscreenButton.FullscreenButton;
-	
 	import com.greensock.*;
-	
 	import flash.display.MovieClip;
 	import flash.display.Stage;
-	
 	import com.cw.utilities.MovieClipChildren;
 	//:::::::::::::::::::::::::::::::::::::::::::::::::
 	// Class Characteristics
@@ -22,14 +19,12 @@ package com.cw.visuals.navigationBar {
 		private var stageReference:Stage;
 		private var swfWidth:int;
 		private var swfHeight:int;
-		
 		private var navBarArray:Array = new Array();
 		private var navBarContentsArray:Array = new Array();
 		//:::::::::::::::::::::::::::::::::::::::::::::::::
 		// Constructor
 		//:::::::::::::::::::::::::::::::::::::::::::::::::
-		public function NavigationBar(){
-		}
+		public function NavigationBar(){}
 		public function updateStageReference(stageReference:Stage):void {
 			this.stageReference = stageReference;
 			addContentStage();
@@ -37,24 +32,18 @@ package com.cw.visuals.navigationBar {
 		private function addContentStage():void {
 			swfWidth = stageReference.stageWidth;
 			swfHeight = stageReference.stageHeight;
-			trace ('!!!!!!!!!!!!!!!!!!!!!!swfWidth is '+swfWidth);
-			trace ('!!!!!!!!!!!!!!!!!!!!!!swfHeight is '+swfHeight);
 			var navigationBar:MovieClip = new MovieClip;
 			stageReference.addChild (navigationBar);
-			
 			var navigationBarBG:MovieClip = new MovieClip;
 			navigationBar.addChild (navigationBarBG);
 			navBarContentsArray.push(navigationBarBG);
-			trace ('!!!!!!!!!!!!!!!!!!!!!!navBarArray 0 is '+navBarContentsArray[0]);
-			
 			var fullscreenButton:FullscreenButton = new FullscreenButton;
 			fullscreenButton.fullscreenButtonInterface(stageReference, navigationBar);
-			
 			var theShapeCreator:CreateShape = new CreateShape();
-			theShapeCreator.draw(CreateShape.SQUARE_FILLED, navBarContentsArray[0], 0, 0, 0)
-			
+			theShapeCreator.draw(CreateShape.SQUARE_ROUNDED_FILLED, navBarContentsArray[0],-1000, -12, 2000, 24)
 			TweenMax.to (navBarContentsArray[0], 0, {alpha:.85, width:swfWidth-50, height:24, tint:000000});
 			TweenMax.to (navigationBar, 0, {x:swfWidth*.5, y:swfHeight-navigationBar.height});
+			trace('@ addContentStage navigationBar x and width '+navBarContentsArray[0].x +' '+ navBarContentsArray[0].width +' '+ swfWidth*.5);
 			//:::::::::::::::::::::::::::::::::::::::::::::::::
 			// to view all the contents of a MC by type pass the MC's ref to targetMc
 			//:::::::::::::::::::::::::::::::::::::::::::::::::
