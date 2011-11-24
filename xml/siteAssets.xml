@@ -153,7 +153,7 @@
 		<ImageLoader name="design6_7" url="design6_7.jpg"/>
 		<ImageLoader name="design6_8" url="design6_8.jpg"/>
 	</LoaderMax>
-	<LoaderMax name="design_7" content="./assets/design/section7/201003cha-IntelAtom.swf" title="Netgear, HP, Intel - WiDi Interactive Demo" width="1000" height="515" type="swf"/>
+	<LoaderMax name="design_7" content="./assets/design/section7/201003cha-IntelAtom.swf" title="Intel IREP - Intel Atom Training" width="1000" height="515" type="swf"/>
 	<LoaderMax name="queue1" maxConnections="2" prependURLs="./images/" load="true">
 		<ImageLoader name="design7_0" url="design7_0.jpg"/>
 		<ImageLoader name="design7_1" url="design7_1.jpg"/>
