@@ -21,6 +21,7 @@ package com.cw.visuals.contentArea{
 	import com.cw.visuals.flipOpen3D.CFlipOpen3Dv3;
 	import com.cw.visuals.flipOpen3D.CFlipOpen3Dv5;
 	import com.cw.visuals.shapeCreators.CreateShape;
+	import com.cw.visuals.text.CDynamicTextField;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Bounce;
 	import com.greensock.easing.Elastic;
@@ -54,6 +55,7 @@ package com.cw.visuals.contentArea{
 		// Private Variables
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		private var currentItem:Object;
+		private var itemBackgroundHolder:MovieClip;
 		private var displayContainer:MovieClip;
 		private var stageReference:Stage;
 		private var stageWidth:int;
@@ -71,8 +73,14 @@ package com.cw.visuals.contentArea{
 		private var startX:Number;
 		private var startY:Number;
 		private var theCDynamicButton:CDynamicButton;
-		private var theImage:Bitmap
-		private var linkButton:Sprite
+		private var theCDynamicTextField;CDynamicTextField;
+		private var theImage:Bitmap;
+		private var linkButton:Sprite;
+		private var aboutButton:Sprite;
+		private var aboutButtonX:int;
+		private var aboutButtonRotation:int;
+		private var aboutTextFieldFinalX:int;
+		private var buttonZ:int = -35;
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Constructor
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -83,12 +91,19 @@ package com.cw.visuals.contentArea{
 		public function itemViewInterface(sectionName:String, sectionIteration:int, stageReference:Stage, currentItem:Object):void{
 			this.sectionName = sectionName;
 			this.sectionIteration = sectionIteration;
-			this.imageName = sectionName + sectionIteration + '_'
+			this.imageName = sectionName + sectionIteration + '_';
 			this.stageReference = stageReference;
 			this.stageWidth = stageReference.stageWidth;
 			this.stageHeight = stageReference.stageHeight;
 			this.currentItem = currentItem;
 			setImageName();
+		}
+		public function setAboutButtonPositions(aboutButtonRotation:int, aboutButtonX:int):void {
+			this.aboutButtonRotation = aboutButtonRotation;
+			this.aboutButtonX = aboutButtonX;
+		}
+		public function setAboutTextFieldFinalX(aboutTextFieldFinalX:int):void {
+			this.aboutTextFieldFinalX = aboutTextFieldFinalX;
 		}
 		public function getItemView():Sprite{
 			return returnedObject;
@@ -130,7 +145,6 @@ package com.cw.visuals.contentArea{
 		}*/
 		private function setImageName():void {
 			sampleImage = sectionName + sectionIteration + '_'+ '0';
-			trace("@ ItemView.setImageName() "+ sampleImage);
 			theImage = LoaderMax.getContent(sampleImage).rawContent;
 			backgroundWidth = (theImage.width * 3) + itemBackgroundBorder;
 			backgroundHeight = (theImage.height * 3) + itemBackgroundBorder;
@@ -170,7 +184,7 @@ package com.cw.visuals.contentArea{
 			}
 		}
 		private function itemBackground(theImage:Bitmap):void{
-			var itemBackgroundHolder:MovieClip = new MovieClip();
+			itemBackgroundHolder = new MovieClip();
 			returnedObject.addChild(itemBackgroundHolder);
 			var backgroundX:Number = theImage.width + (itemBackgroundBorder* .5);
 			var backgroundY:Number = theImage.height + (itemBackgroundBorder* .5);
@@ -179,7 +193,7 @@ package com.cw.visuals.contentArea{
 			var startWidth:Number = currentItem.width;
 			var startHeight:Number = currentItem.height;
 			TweenMax.to (itemBackgroundHolder, 0, {alpha:.1, x:startX, y:startY, width:startWidth, height:startHeight});
-			TweenMax.to(itemBackgroundHolder, .5, {alpha:.5, x:-backgroundX, y:-backgroundY, z:-25, width:backgroundWidth, height:backgroundHeight, dropShadowFilter:{color:0x000000, alpha:.5, blurX:15, blurY:15, distance:25}, ease:Sine.easeOut, 
+			TweenMax.to (itemBackgroundHolder, .5, {alpha:.5, x:-backgroundX, y:-backgroundY, z:-25, width:backgroundWidth, height:backgroundHeight, dropShadowFilter:{color:0x000000, alpha:.5, blurX:15, blurY:15, distance:25}, ease:Sine.easeOut, 
 				onComplete:addItemView
 			});
 		}
@@ -193,6 +207,7 @@ package com.cw.visuals.contentArea{
 			addButtons();
 		}
 		private function addButtons():void {
+			addAboutButton();
 			addCloseButton();
 			stageReference.addEventListener( FullScreenEvent.FULL_SCREEN, fullScreenHandler );
 			fullScreenHandler(undefined)
@@ -213,8 +228,8 @@ package com.cw.visuals.contentArea{
 			theCDynamicButton.buttonInterface(theButtonText('buttonClose'))
 			var closeButton:Sprite = theCDynamicButton.getTheButton();
 			var closeButtonX = (theImage.width *.5);
-			var closeButtonY = (backgroundHeight*.5)+20 ;
-			TweenMax.to (closeButton, 0, {alpha:1, x:closeButtonX, y:closeButtonY, z:-30});
+			var closeButtonY = (backgroundHeight*.5)+40 ;
+			TweenMax.to (closeButton, 0, {alpha:1, x:closeButtonX, y:closeButtonY, z:buttonZ, dropShadowFilter:{color:0x000000, alpha:.5, blurX:5, blurY:5, distance:5}});
 			closeButtonHolder.addChild(closeButton);
 			returnedObject.addChild(closeButtonHolder);
 			closeButton.addEventListener (MouseEvent.MOUSE_UP, closeButtonUp);
@@ -230,8 +245,8 @@ package com.cw.visuals.contentArea{
 			theCDynamicButton.buttonInterface(theButtonText('buttonView'));
 			linkButton = theCDynamicButton.getTheButton();
 			var linkButtonX = (theImage.width *.5);
-			var linkButtonY = -theImage.height-7;
-			TweenMax.to (linkButton, 0, {alpha:0, x:linkButtonX, y:linkButtonY, z:-30});
+			var linkButtonY = -theImage.height-25;
+			TweenMax.to (linkButton, 0, {alpha:0, x:linkButtonX, y:linkButtonY, z:buttonZ, dropShadowFilter:{color:0x000000, alpha:.5, blurX:5, blurY:5, distance:5}});
 			TweenMax.to (linkButton, .5, {alpha:1});
 			returnedObject.addChild(linkButton);
 			linkButton.addEventListener (MouseEvent.MOUSE_UP, linkButtonUp);
@@ -247,6 +262,29 @@ package com.cw.visuals.contentArea{
 			Shadowbox.overlayOpacity = .97;
 			Shadowbox.overlayColor = '#000000';
 			Shadowbox.instance.open(content, title, width, height, type);
+		}
+		private function addAboutButton():void{
+			theCDynamicButton = new CDynamicButton();
+			theCDynamicButton.buttonInterface(theButtonText('buttonAbout'));
+			aboutButton = theCDynamicButton.getTheButton();
+			//var aboutButtonX = -(theImage.width+26);
+			var aboutButtonY = theImage.height*.5;
+			TweenMax.to (aboutButton, 0, {alpha:0, x:aboutButtonX, y:aboutButtonY, z:buttonZ, rotation:aboutButtonRotation, dropShadowFilter:{color:0x000000, alpha:.5, angle:120, blurX:5, blurY:5, distance:5}});
+			TweenMax.to (aboutButton, .5, {alpha:1});
+			returnedObject.addChild(aboutButton);
+			aboutButton.addEventListener (MouseEvent.MOUSE_UP, aboutButtonUp);
+		}
+		private function aboutButtonUp(upEvent:Event):void{
+			var aboutTextRef:String = sectionName + 'AboutText' + sectionIteration;
+			trace("@ ItemView.aboutButtonUp(upEvent) "+ aboutTextRef);
+			theCDynamicTextField = new CDynamicTextField();
+			theCDynamicTextField.textFieldInterface(theButtonText(aboutTextRef), 320, 320);
+			var aboutTextField = theCDynamicTextField.getTheTextField();
+			var aboutTextFieldX = itemBackgroundHolder.x;
+			var aboutTextFieldY = itemBackgroundHolder.y;
+			TweenMax.to (aboutTextField, 0, {alpha:0, x:aboutTextFieldX, y:aboutTextFieldY, z:0});
+			TweenMax.to (aboutTextField, 1, {alpha:1, x:aboutTextFieldFinalX, y:aboutTextFieldY, z:-30, dropShadowFilter:{color:0x000000, alpha:.5, blurX:5, blurY:5, distance:5}, ease:Sine.easeOut});
+			returnedObject.addChild(aboutTextField);
 		}
 		/**
 		 * Method for returning button text. Pass it a refrence of the nodes 'name'
