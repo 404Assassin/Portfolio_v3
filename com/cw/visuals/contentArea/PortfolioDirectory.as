@@ -32,6 +32,9 @@ package com.cw.visuals.contentArea{
 		// Constructor
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		public function PortfolioDirectory(){};
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		// Public Interfaces
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		public function portfolioDirectoryInterface(stageReference:Stage, mainMC:MovieClip):void{
 			this.stageReference = stageReference;
 			this.mainMC = mainMC;
@@ -41,6 +44,9 @@ package com.cw.visuals.contentArea{
 			TweenMax.to (displayContainer, 1, {delay:.5, alpha:0, visible:false, ease:Sine.easeOut});
 			displayContainer = null;
 		}
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		// Private Methods
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		private function addDisplayContainer():void{
 			displayContainer = new MovieClip();
 			mainMC.content_stage.addChild(displayContainer);
@@ -49,45 +55,33 @@ package com.cw.visuals.contentArea{
 			addToDisplay();
 		}
 		private function addToDisplay():void{
+			designDirectory();
 			developmentDirectory();
-			motionDirectory();
 		}
-		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		// params for Flipout5.addToDisplay are, by both name and type, are the_mcX:Number, the_mcY:Number, imagePath:String, imageName:String, imageType:String
-		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		private function motionDirectory():void {
-			var motionDirectoryHolder:MovieClip = new MovieClip();
-			displayContainer.addChild(motionDirectoryHolder);
-			var theCFlipOpen3Dv1:CFlipOpen3Dv1 = new CFlipOpen3Dv1();
-			theCFlipOpen3Dv1.setCFlip3D('TheRaven_0', directoryButtonWidth, directoryButtonHeight);
-			var motionDirectory:Sprite = theCFlipOpen3Dv1.getCFlipOpen3D();
-			motionDirectoryHolder.addChild(motionDirectory);
-			TweenMax.to(motionDirectory, 0, {rotationY:-180, x:320, y:-45});
-			TweenMax.to(motionDirectoryHolder, 1, {delay:2.5, alpha:1, z:50, dropShadowFilter:{color:0x000000, alpha:.5, blurX:15, blurY:15, distance:30}, ease:Sine.easeOut, onComplete:animeLoop, onCompleteParams:[motionDirectoryHolder]});
-		}
-		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		// params for Flipout5.addToDisplay are, by both name and type, are the_mcX:Number, the_mcY:Number, imagePath:String, imageName:String, imageType:String
-		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-/*		private function developmentDirectory():void {
+		private function developmentDirectory():void {
 			var developmentDirectoryHolder:MovieClip = new MovieClip();
 			displayContainer.addChild(developmentDirectoryHolder);
-			var theCDevelopmentDirectory:CDevelopmentDirectory = new CDevelopmentDirectory();
-			theCDevelopmentDirectory.setCFlip3D('compass_v0', directoryButtonWidth, directoryButtonHeight);
-			theCDevelopmentDirectory.stageAccess(stageReference);
-			var developmentDirectory:Sprite = theCDevelopmentDirectory.getCFlipOpen3D();
+			var CDevelopmentDirectory:CSectionDirectory = new CSectionDirectory();
+			CDevelopmentDirectory.setCFlip3D('development', directoryButtonWidth, directoryButtonHeight);
+			CDevelopmentDirectory.stageAccess(stageReference, 'development');
+			CDevelopmentDirectory.setAboutTextFieldFinalX(468)
+			CDevelopmentDirectory.setAboutButtonPositions(90, 225);
+			var developmentDirectory:Sprite = CDevelopmentDirectory.getCFlipOpen3D();
 			developmentDirectoryHolder.addChild(developmentDirectory);
-			TweenMax.to(developmentDirectory, 0, {rotationY:-180, x:-260, y:-45});
+			TweenMax.to(developmentDirectory, 0, {rotationY:-180, x:320, y:-45});
 			TweenMax.to(developmentDirectoryHolder, 1, {delay:2.5, alpha:1, z:50, dropShadowFilter:{color:0x000000, alpha:.5, blurX:15, blurY:15, distance:30}, ease:Sine.easeOut, onComplete:animeLoop, onCompleteParams:[developmentDirectoryHolder]});
-		}*/
-		private function developmentDirectory():void {
+		}
+		private function designDirectory():void {
 			var designDirectoryHolder:MovieClip = new MovieClip();
 			displayContainer.addChild(designDirectoryHolder);
 			var CDesignDirectory:CSectionDirectory = new CSectionDirectory();
 			CDesignDirectory.setCFlip3D('design', directoryButtonWidth, directoryButtonHeight);
 			CDesignDirectory.stageAccess(stageReference, 'design');
-			var developmentDirectory:Sprite = CDesignDirectory.getCFlipOpen3D();
-			designDirectoryHolder.addChild(developmentDirectory);
-			TweenMax.to(developmentDirectory, 0, {rotationY:-180, x:-260, y:-45});
+			CDesignDirectory.setAboutTextFieldFinalX(-690)
+			CDesignDirectory.setAboutButtonPositions(-90, -125);
+			var designDirectory:Sprite = CDesignDirectory.getCFlipOpen3D();
+			designDirectoryHolder.addChild(designDirectory);
+			TweenMax.to(designDirectory, 0, {rotationY:-180, x:-260, y:-45});
 			TweenMax.to(designDirectoryHolder, 1, {delay:2.5, alpha:1, z:50, dropShadowFilter:{color:0x000000, alpha:.5, blurX:15, blurY:15, distance:30}, ease:Sine.easeOut, onComplete:animeLoop, onCompleteParams:[designDirectoryHolder]});
 		}
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
