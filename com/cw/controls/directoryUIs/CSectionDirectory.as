@@ -65,6 +65,9 @@ package com.cw.controls.directoryUIs{
 		private var stageReference:Stage;
 		private var sectionName:String;
 		private var buttonsBounds:Rectangle;
+		private var aboutButtonX:int;
+		private var aboutButtonRotation:int;
+		private var aboutTextFieldFinalX:int;
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Constructor
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -81,6 +84,13 @@ package com.cw.controls.directoryUIs{
 		public function stageAccess(stageReference:Stage, sectionName:String):void{
 			this.stageReference = stageReference;
 			this.sectionName = sectionName;
+		}
+		public function setAboutButtonPositions(aboutButtonRotation:int, aboutButtonX:int):void {
+			this.aboutButtonRotation = aboutButtonRotation;
+			this.aboutButtonX = aboutButtonX;
+		}
+		public function setAboutTextFieldFinalX(aboutTextFieldFinalX:int):void {
+			this.aboutTextFieldFinalX = aboutTextFieldFinalX;
 		}
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Getters and Setters
@@ -221,6 +231,8 @@ package com.cw.controls.directoryUIs{
 					var currentItem:Object = upEvent.currentTarget;
 					theItemView = new ItemView();
 					theItemView.itemViewInterface(sectionName, i, stageReference, currentItem);
+					theItemView.setAboutTextFieldFinalX(aboutTextFieldFinalX)
+					theItemView.setAboutButtonPositions(aboutButtonRotation, aboutButtonX);
 					itemViewHolder = theItemView.getItemView();
 					addItemView();
 				}
@@ -234,6 +246,7 @@ package com.cw.controls.directoryUIs{
 			itemViewHolder.addEventListener ( MouseEvent.MOUSE_UP, closeButtonUp, false);
 		}
 		private function closeButtonUp(upEvent:Event){
+			upEvent.currentTarget.parent.parent.parent.setChildIndex(upEvent.currentTarget.parent.parent, upEvent.currentTarget.parent.parent.parent.numChildren - 1);
 			if(upEvent.currentTarget == theItemView.closeButtonHolder) {
 				TweenMax.to (returnedObject, .5, {alpha:0, z:0, visible:false});
 			}
