@@ -83,7 +83,7 @@ package com.cw.controls.dynamicButton{
 			textField.embedFonts = false;
 			textField.autoSize = TextFieldAutoSize.CENTER;
 			textField.antiAliasType = AntiAliasType.ADVANCED; 
-			textField.styleSheet = LoaderMax.getContent("flashStyleSheet");;
+			textField.styleSheet = LoaderMax.getContent("flashStyleSheet");
 			textField.htmlText = textContent;
 			button.buttonText.addChild(textField);
 			button.buttonText.filters = [new DropShadowFilter(2, 45, 0x000000, 1, 2, 2, 1, 2, true, true, false)];
