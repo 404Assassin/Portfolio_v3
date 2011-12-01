@@ -58,7 +58,7 @@ package com.cw.visuals.contentArea.states{
 		}
 		private function openingAnimation () {
 			TweenMax.to (stateTarget, 0, {alpha:0, scaleX:1, scaleY:1, rotationY:-180});
-			TweenMax.to (stateTarget.dottedLine, 0, {alpha:1, z:25});
+			TweenMax.to (stateTarget.dottedLine, 0, {alpha:1, z:50});
 			TweenMax.to (stateTarget.main_mc_BG, 0, {alpha:0, scaleX:1, scaleY:1, z:1500});
 			TweenMax.to (stateTarget.main_mc_BG, 2, {alpha:.5, z:0});
 			TweenMax.to (stateTarget.content_stage, 0, {z:-1525, alpha:0});
