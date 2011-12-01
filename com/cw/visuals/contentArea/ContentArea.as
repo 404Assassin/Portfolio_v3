@@ -224,15 +224,12 @@ package com.cw.visuals.contentArea{
 			contactForm = null;
 		}
 		private function portfolioOn():void{
-			trace("@ ContentArea.portfolioOn() ");
 			portfolioDirectory = new PortfolioDirectory();
 			portfolioDirectory.portfolioDirectoryInterface(stageReference, mainMC);
 		}
 		private function portfolioOff():void{
-			trace("@ ContentArea.portfolioOff() ");
 			portfolioDirectory.portfolioDirectoryOffInterface();
 			portfolioDirectory = null;
-			trace("@ ContentArea.portfolioOff() "+ portfolioDirectory);
 		}
 		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// target object and pass it the new hex color reference
