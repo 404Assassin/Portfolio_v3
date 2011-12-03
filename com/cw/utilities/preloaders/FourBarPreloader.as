@@ -5,7 +5,7 @@ package com.cw.utilities.preloaders{
 	 * language version: ActionScript 3.0
 	 * player version: Flash 10.0
 	 * author: Christian Worley
-	 * created: 01/2011
+	 * created: 06/2011
 	 * TODO:
 	 * :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	 */
@@ -63,16 +63,16 @@ package com.cw.utilities.preloaders{
 		private function addProgressBars():void {
 			var barPlacementX:int = stageWidth * .5;
 			var barPlacementY:int = stageHeight * .5;
-			TweenMax.to (theProgressBars, 0, {alpha:.5, x:barPlacementX, y:barPlacementY});
+			TweenMax.to (theProgressBars, 0, {alpha:0, x:barPlacementX, y:barPlacementY});
 			TweenMax.to (theProgressBars.bar1, 0, {alpha:0, scaleX:.1});
 			TweenMax.to (theProgressBars.bar2, 0, {alpha:0, scaleX:.1});
 			TweenMax.to (theProgressBars.bar3, 0, {alpha:0, scaleX:.1});
 			TweenMax.to (theProgressBars.bar4, 0, {alpha:0, scaleX:.1});
 			placementTarget.addChild(theProgressBars);
+			TweenMax.to (theProgressBars, 2, {alpha:1, ease:Sine.easeOut});
 		}
 		private function progressHandler(loaderEvent:LoaderEvent):void {
 			var theRatioConversion:RatioConversion = new RatioConversion();
-			TweenMax.to (theProgressBars, 1, {alpha:barAlpha, ease:Sine.easeOut});
 			if(loaderEvent.target.progress <= .25){
 				TweenMax.to(theProgressBars.bar2, .2, {alpha:0, scaleX:.1, ease:Sine.easeOut});
 				TweenMax.to(theProgressBars.bar3, .2, {alpha:0, scaleX:.1, ease:Sine.easeOut});
