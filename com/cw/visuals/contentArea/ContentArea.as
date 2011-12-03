@@ -1,7 +1,7 @@
 package com.cw.visuals.contentArea{
 	/**
 	 * ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	 * ContentArea Class
+	 * Content area base class
 	 * language version: ActionScript 3.0
 	 * player version: Flash 10.0
 	 * author: Christian Worley
@@ -19,31 +19,17 @@ package com.cw.visuals.contentArea{
 	import com.cw.patterns.observer.IInvokedObserver;
 	import com.cw.patterns.observer.InvokedObserver;
 	import com.cw.stageAlignments.StageAlignment;
-	import com.cw.utilities.loaders.FontSWFLoader;
-	import com.cw.utilities.loaders.StyleSheetLoader;
 	import com.cw.visuals.animations.NameAnime;
-	import com.cw.visuals.contentArea.PortfolioDirectory;
 	import com.cw.visuals.contentArea.states.ContentAreaState;
-	import com.cw.visuals.flipOpen3D.CFlipOpen3Dv1;
 	import com.cw.visuals.flipOpen3D.CFlipOpen3Dv2;
-	import com.cw.visuals.flipOpen3D.CFlipOpen3Dv3;
-	import com.cw.visuals.flipOpen3D.CFlipOpen3Dv5;
-	import com.cw.visuals.flipOpen3D.Flip3DOpen5;
-	import com.cw.visuals.flipOpen3D.FlipOpen3dAnime5;
 	import com.greensock.TimelineMax;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Sine;
 	import com.greensock.loading.LoaderMax;
-	//import flash.utils.
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.display.Stage;
-	import flash.events.Event;
 	import flash.geom.Point;
-	import flash.geom.Transform;
-	import flash.text.Font;
-	import flash.trace.Trace;
-
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	// Class characteristics
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -57,13 +43,6 @@ package com.cw.visuals.contentArea{
 		private var backgroundObserver:InvokedObserver;
 		private var infoObj:Object;
 		private var mainMC:main_mc = new main_mc();
-		//private var animeHolder:MovieClip = new MovieClip();
-		private var main_mc_BGTopY:Number;
-		private var main_mc_BGCenterY:Number;
-		private var main_mc_BGBottomY:Number;
-		private var my_current_x:Number;
-		private var my_current_y:Number;
-		private var placementTarget:MovieClip = mainMC.content_stage;
 		private var stageReference:Stage;
 		private var stageWidth:int;
 		private var stageHeight:int;
@@ -85,6 +64,10 @@ package com.cw.visuals.contentArea{
 		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Private Methods
 		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		/**
+		 * Update 3D transform pespective postion to center stage. 
+		 * 
+		 */		
 		private function centerStagePerspective():void {
 			stageReference.transform.perspectiveProjection.projectionCenter = new Point(stageReference.stageWidth * .5, stageReference.stageHeight * .5);
 		}
@@ -98,23 +81,22 @@ package com.cw.visuals.contentArea{
 			addStageAlignment();
 			addContentStage();
 		}
-		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		// invoke addNavigationBar and pass the Class interface a stage reference
-		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		private function addNameAnime():void {
 			var theNameAnime:NameAnime = new NameAnime();
 			theNameAnime.nameAnimeInterface(mainMC, 0, -170);
 			theNameAnime.observableInstanceRef(contactObserver);
 		}
-		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		// DynamicButton contactButton, by both name and type; placementTarget:MovieClip, xPlacement:int, yPlacement:int, textContent:String
-		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		private function addButtons():void{
 			theContactButton();
 			thePortfolioButton();
 			theBackButton();
 			observableContactObserver();
 		}
+		/**
+		 * DynamicButton contactButton, by both name and type; 
+		 * placementTarget:MovieClip, xPlacement:int, yPlacement:int, 
+		 * textContent:String 
+		 */
 		private function theContactButton():void{
 			var contactButton:ContactButton = new ContactButton();
 			contactButton.buttonInterface(mainMC, 280, -33, theButtonText('buttonContact'));
@@ -155,12 +137,13 @@ package com.cw.visuals.contentArea{
 			var TheStageAlignment:StageAlignment = new StageAlignment();
 			TheStageAlignment.addStageAlignmentEventListeners(stageReference, mainMC)
 		}
+		/**
+		 * params for Flipout5.addToDisplay are, by both name and type, 
+		 * imageName:String, the the_mcX:Number, the_mcY:Number
+		 */
 		private function addContentStage():void {
 			var animeHolder:MovieClip = new MovieClip();
 			mainMC.content_stage.addChild(animeHolder);
-			//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-			// params for Flipout5.addToDisplay are, by both name and type, the the_mcX:Number, the_mcY:Number, imagePath:String, imageName:String, imageType:String
-			//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 			var theCFlipOpen3Dv5:CFlipOpen3Dv2 = new CFlipOpen3Dv2();
 			theCFlipOpen3Dv5.setCFlip3D('TheRaven_v2_0', 50, 50);
 			var thisCFlipOpen3Dv5:Sprite = theCFlipOpen3Dv5.getCFlipOpen3D();
@@ -170,28 +153,31 @@ package com.cw.visuals.contentArea{
 			TweenMax.to(animeHolder, 1, {delay:4.5, alpha:1, dropShadowFilter:{color:0x000000, alpha:.5, blurX:5, blurY:5, distance:5, inner:true}, ease:Sine.easeOut, onComplete:animeLoop, onCompleteParams:[animeHolder]});
 			updateContentAreaState('contactInitBuild');
 		}
-		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		// loop for nested 3d displayObject bug
-		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		/**
+		 * loop for nested 3d transform displayObject bug
+		 */
 		private function animeLoop(animeHolder:MovieClip):void {
 			var timeline:TimelineMax = new TimelineMax({repeat:-1, yoyo:true, repeatDelay:0});
 			timeline.append(TweenMax.to(animeHolder, 1, {alpha:1}));
 			timeline.append(TweenMax.to(animeHolder, 1, {alpha:.99999}));
 		}
-		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		// InvokedObserver interface, reference update, and subscription
-		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		/**
+		 * InvokedObserver interface, reference update, and subscription
+		 */
 		public function observableInstanceRef(backgroundObserver:InvokedObserver):void{
 			this.backgroundObserver = backgroundObserver;
 			backgroundObserver.addObserver(this)
 		}
-		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		// InvokedObserver update
-		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		/**
+		 * InvokedObserver update
+		 */
 		public function update(o:InvokedObserver, infoObj:Object):void{
 			this.infoObj = infoObj;
 			updateContentAreaState(infoObj);
 		}
+		/**
+		 * update Content Area State by observer info object as a conditional
+		 */
 		private function updateContentAreaState(infoObj:Object):void{
 			var theContentAreaState:ContentAreaState = new ContentAreaState();
 			theContentAreaState.contentAreaStateInterface(stageReference, mainMC);
@@ -219,6 +205,9 @@ package com.cw.visuals.contentArea{
 			contactForm = new ContactForm();
 			contactForm.contactFormInterface(stageReference, mainMC);
 		}
+		/**
+		 * Contact form GC 
+		 */		
 		private function contactFormOff():void{
 			contactForm.contactFormOffInterface();
 			contactForm = null;
@@ -227,13 +216,17 @@ package com.cw.visuals.contentArea{
 			portfolioDirectory = new PortfolioDirectory();
 			portfolioDirectory.portfolioDirectoryInterface(stageReference, mainMC);
 		}
+		/**
+		 * portfolio section GC
+		 * 
+		 */
 		private function portfolioOff():void{
 			portfolioDirectory.portfolioDirectoryOffInterface();
 			portfolioDirectory = null;
 		}
-		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		// target object and pass it the new hex color reference
-		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		/**
+		 * target object and pass it the new hex color reference
+		 */
 		private function setContentAreaBGColor(theAverageColor:Object){
 			TweenMax.to (mainMC.content_stage.stageBG, 1, {delay:2.5, tint:theAverageColor});
 			TweenMax.to (mainMC.main_mc_BG, 2, {delay:3, tint:theAverageColor});
