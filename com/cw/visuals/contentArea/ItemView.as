@@ -26,6 +26,7 @@ package com.cw.visuals.contentArea{
 	import com.greensock.easing.Bounce;
 	import com.greensock.easing.Elastic;
 	import com.greensock.easing.Sine;
+	import com.greensock.events.TweenEvent;
 	import com.greensock.events.LoaderEvent;
 	import com.greensock.loading.ImageLoader;
 	import com.greensock.loading.LoaderMax;
@@ -267,7 +268,6 @@ package com.cw.visuals.contentArea{
 			theCDynamicButton = new CDynamicButton();
 			theCDynamicButton.buttonInterface(theButtonText('buttonAbout'));
 			aboutButton = theCDynamicButton.getTheButton();
-			//var aboutButtonX = -(theImage.width+26);
 			var aboutButtonY = theImage.height*.5;
 			TweenMax.to (aboutButton, 0, {alpha:0, x:aboutButtonX, y:aboutButtonY, z:buttonZ, rotation:aboutButtonRotation, dropShadowFilter:{color:0x000000, alpha:.5, angle:120, blurX:5, blurY:5, distance:5}});
 			TweenMax.to (aboutButton, .5, {alpha:1});
@@ -276,15 +276,18 @@ package com.cw.visuals.contentArea{
 		}
 		private function aboutButtonUp(upEvent:Event):void{
 			var aboutTextRef:String = sectionName + 'AboutText' + sectionIteration;
-			trace("@ ItemView.aboutButtonUp(upEvent) "+ aboutTextRef);
 			theCDynamicTextField = new CDynamicTextField();
 			theCDynamicTextField.textFieldInterface(theButtonText(aboutTextRef), 320, 320);
 			var aboutTextField = theCDynamicTextField.getTheTextField();
 			var aboutTextFieldX = itemBackgroundHolder.x;
 			var aboutTextFieldY = itemBackgroundHolder.y;
 			TweenMax.to (aboutTextField, 0, {alpha:0, x:aboutTextFieldX, y:aboutTextFieldY, z:0});
-			TweenMax.to (aboutTextField, 1, {alpha:1, x:aboutTextFieldFinalX, y:aboutTextFieldY, z:-30, dropShadowFilter:{color:0x000000, alpha:.5, blurX:5, blurY:5, distance:5}, ease:Sine.easeOut});
+			TweenMax.to (aboutTextField, 1, {alpha:1, x:aboutTextFieldFinalX, y:aboutTextFieldY, z:-30, dropShadowFilter:{color:0x000000, alpha:.5, blurX:5, blurY:5, distance:5}, ease:Sine.easeOut, onComplete:reset3DTransform, onCompleteParams:[aboutTextField]});
 			returnedObject.addChild(aboutTextField);
+		}
+		private function reset3DTransform(targetSprite:Sprite):void {
+			//trace(targetSprite);
+			//targetSprite.transform.matrix3D = null;
 		}
 		/**
 		 * Method for returning button text. Pass it a refrence of the nodes 'name'
