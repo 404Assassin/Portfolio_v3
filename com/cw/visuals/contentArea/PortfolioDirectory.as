@@ -1,4 +1,18 @@
 package com.cw.visuals.contentArea{
+	/**
+	 * :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	 * Class discription: portfolio directory
+	 * language version: ActionScript 3.0
+	 * player version: Flash 10.0
+	 * author: christian
+	 * contact: christian@worleydev.com
+	 * created: 04/2011
+	 * TODO; 
+	 * :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	 */
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	// Imports
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	import com.cw.controls.directoryUIs.CSectionDirectory;
 	import com.cw.visuals.flipOpen3D.CDevelopmentDirectory;
 	import com.cw.visuals.flipOpen3D.CFlipOpen3Dv1;
@@ -11,11 +25,9 @@ package com.cw.visuals.contentArea{
 	import com.greensock.TimelineMax;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Sine;
-	
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.display.Stage;
-	
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	// Class
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -84,9 +96,10 @@ package com.cw.visuals.contentArea{
 			TweenMax.to(designDirectory, 0, {rotationY:-180, x:-260, y:-45});
 			TweenMax.to(designDirectoryHolder, 1, {delay:2.5, alpha:1, z:50, dropShadowFilter:{color:0x000000, alpha:.5, blurX:15, blurY:15, distance:30}, ease:Sine.easeOut, onComplete:animeLoop, onCompleteParams:[designDirectoryHolder]});
 		}
-		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		// loop for nested 3d displayObject bug
-		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		/**
+		 * loop for nested 3d displayObject bug
+		 * 
+		 */
 		private function animeLoop(animeHolder:MovieClip):void {
 			var timeline:TimelineMax = new TimelineMax({repeat:-1, yoyo:true, repeatDelay:0});
 			timeline.append(TweenMax.to(animeHolder, 1, {alpha:1}));
