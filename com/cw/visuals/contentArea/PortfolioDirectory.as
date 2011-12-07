@@ -97,7 +97,7 @@ package com.cw.visuals.contentArea{
 			TweenMax.to(designDirectoryHolder, 1, {delay:2.5, alpha:1, z:50, dropShadowFilter:{color:0x000000, alpha:.5, blurX:15, blurY:15, distance:30}, ease:Sine.easeOut, onComplete:animeLoop, onCompleteParams:[designDirectoryHolder]});
 		}
 		/**
-		 * loop for nested 3d displayObject bug
+		 * fix/hack visual loop for the nested 3d transform displayObject bug
 		 * 
 		 */
 		private function animeLoop(animeHolder:MovieClip):void {
