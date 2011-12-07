@@ -14,33 +14,22 @@ package com.cw.data.forms{
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	
 	import com.cw.controls.dynamicButton.DynamicButton;
-	import com.cw.controls.prompt.CErrorPopUp;
 	import com.cw.controls.prompt.ErrorPopUp;
-	import com.cw.data.forms.CreateInputTextField;
 	import com.cw.data.regularExpressions.EmailCheck;
 	import com.cw.data.serverSideCommunication.ContactFormData;
 	import com.cw.patterns.observer.IInvokedObserver;
 	import com.cw.patterns.observer.InvokedObserver;
-	import com.cw.visuals.animations.SimpleLine;
-	import com.cw.visuals.animations.CSimpleLine;
 	import com.cw.visuals.shapeCreators.CreateShape;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Sine;
 	import com.greensock.loading.LoaderMax;
+	
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.FocusEvent;
 	import flash.events.KeyboardEvent;
-	import flash.geom.Point;
-	import flash.geom.Vector3D;
-	import flash.text.AntiAliasType;
-	import flash.text.GridFitType;
 	import flash.text.TextField;
-	import flash.text.TextFieldAutoSize;
-	import flash.text.TextFieldType;
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	// Class characteristics
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -49,8 +38,6 @@ package com.cw.data.forms{
 		// Private Variables
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		private var contactFormHolder:MovieClip;
-		private var formContentsArray:Array = new Array();
-		private var theFormat:TextFormat = new TextFormat();
 		private var stageReference:Stage;
 		private var placementTarget:MovieClip;
 		private var rotationAmount:int = 180;
@@ -79,10 +66,6 @@ package com.cw.data.forms{
 		private var errorFieldBufferY:int = 10;
 		private var nameErrorX:int = 225;
 		private var nameErrorY:int = 5;
-/*		private var emailErrorX:int = 195;
-		private var emailErrorY:int = -25;
-		private var messageErrorX:int = 195;
-		private var messageErrorY:int = -25;*/
 		private var nameErrorPopUpHeight:Number
 		private var emailErrorPopUpHeight:Number
 		private var defaultNameText:String;
@@ -127,7 +110,6 @@ package com.cw.data.forms{
 		}
 		private function addFormHolder():void {
 			contactFormHolder = new MovieClip();
-			//formContentsArray.push(contactFormHolder);
 			TweenMax.to (contactFormHolder, 0, {alpha:0, x:465, y:-190, rotationY:rotationAmount});
 			placementTarget.content_stage.addChild(contactFormHolder);
 			addFormHolderBackground();
@@ -292,7 +274,7 @@ package com.cw.data.forms{
 		}
 		private function sendDataHandler():void{
 			var theContactFormData:ContactFormData = new ContactFormData();
-			theContactFormData.contactFormDataInterface("http://worleydev.com/test/portfolio_v3/mail.php", nameData, emailData, messageData)
+			theContactFormData.contactFormDataInterface("http://worleydev.com/mail.php", nameData, emailData, messageData)
 		}
 		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Form data error handles
@@ -304,14 +286,12 @@ package com.cw.data.forms{
 		private function emailValidationError():void {
 			nameErrorPopUpHeight = nameErrorPopUp.getErrorPopUpHeight()
 			var emailErrorY:int = nameErrorY + nameErrorPopUpHeight + errorFieldBufferY
-			trace("@ ContactForm.emailValidationError() nameErrorPopUpHeight "+ nameErrorPopUpHeight);
 			emailErrorPopUp.errorPopUpInterface(contactFormHolder, nameErrorX, emailErrorY, errorEmailText);
 			emailErrorPopUp.lineInterface(-215, -23);
 		}
 		private function messageValidationError():void {
 			emailErrorPopUpHeight = 44
 			var messageErrorY:int = nameErrorY + nameErrorPopUpHeight + errorFieldBufferY + emailErrorPopUpHeight + errorFieldBufferY
-			trace("@ ContactForm.messageValidationError() emailErrorPopUpHeight "+ emailErrorPopUpHeight);
 			messageErrorPopUp.errorPopUpInterface(contactFormHolder, nameErrorX, messageErrorY, errorMessageText);
 			messageErrorPopUp.lineInterface(-215, -52);
 		}
