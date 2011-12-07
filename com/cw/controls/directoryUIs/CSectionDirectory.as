@@ -17,6 +17,8 @@ package com.cw.controls.directoryUIs{
 	import com.cw.visuals.contentArea.ItemView;
 	import com.cw.visuals.flipOpen3D.ICFlip3D;
 	import com.cw.visuals.shapeCreators.CreateShape;
+	import com.cw.visuals.text.CDynamicTextField;
+	import com.cw.visuals.text.ICDynamicTextField;
 	import com.cw.visuals.tweenStates.DirectoryButtonStates;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Sine;
@@ -42,21 +44,16 @@ package com.cw.controls.directoryUIs{
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		private var theItemView:ItemView
 		private var buttonStates:DirectoryButtonStates = new DirectoryButtonStates();
-		private var placementTarget:MovieClip;
 		private var itemViewHolder:Sprite;
 		private var returnedObject:MovieClip;
-		private var placement_BG:MovieClip;
 		private var placement_BGAlpha:Number = .5;
-		private var placement_contents:MovieClip;
 		private var the_mcX:Number = 0;
 		private var the_mcY:Number = 0;
 		private var backgroundCenterWidth:Number = 10;
 		private var backgroundCenterHeight:Number = 10;
 		private var backgroundWidth:Number;
 		private var backgroundHeight:Number;
-		private var imagePath:String
 		private var imageName:String
-		private var imageType:String
 		private var finalPlacementAlpha:Number = 1;
 		private var the_mcWidth:Number;
 		private var the_mcHeight:Number;
@@ -68,6 +65,7 @@ package com.cw.controls.directoryUIs{
 		private var aboutButtonX:int;
 		private var aboutButtonRotation:int;
 		private var aboutTextFieldFinalX:int;
+		private var sectionHeaderTextHolder:Sprite;
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Constructor
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -84,7 +82,11 @@ package com.cw.controls.directoryUIs{
 		public function stageAccess(stageReference:Stage, sectionName:String):void{
 			this.stageReference = stageReference;
 			this.sectionName = sectionName;
+			addSectionHeader();
 		}
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		// Setters
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		public function setAboutButtonPositions(aboutButtonRotation:int, aboutButtonX:int):void {
 			this.aboutButtonRotation = aboutButtonRotation;
 			this.aboutButtonX = aboutButtonX;
@@ -93,7 +95,7 @@ package com.cw.controls.directoryUIs{
 			this.aboutTextFieldFinalX = aboutTextFieldFinalX;
 		}
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		// Getters and Setters
+		// Getters
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		public function getCFlipOpen3D():Sprite{
 			return returnedObject;
@@ -104,6 +106,23 @@ package com.cw.controls.directoryUIs{
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Private Methods
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		private function addSectionHeader():void{
+			sectionHeaderTextHolder = new Sprite();
+			var nodeName:String = sectionName + 'Header';
+			var headerContent:LoaderMax = LoaderMax.getLoader(nodeName);
+			var headerText:String = headerContent.vars.text;
+			var headerTag:String = headerContent.vars.cssTag;
+			var header:String = '<'+headerTag+'>'+headerText+'</'+headerTag+'>';
+			var theCDynamicTextField:CDynamicTextField = new CDynamicTextField();
+			theCDynamicTextField.textFieldInterface(header, 185, 40, false, 0x000000, false, false);
+			var xPlacement:int = -62
+			var yPlacement:int = -105
+			var sectionHeaderText:Sprite = theCDynamicTextField.getTheTextField();
+			sectionHeaderTextHolder.addChild(sectionHeaderText);
+			TweenMax.to (sectionHeaderTextHolder, 0,{alpha:0, x:xPlacement, y:-35, z:0});
+			TweenMax.to (sectionHeaderTextHolder, 1,{delay:1.5, alpha:1, x:xPlacement, y:yPlacement, ease:Sine.easeInOut});
+			returnedObject.addChild(sectionHeaderTextHolder);
+		}
 		private function iterativeBuild():void {
 			returnedObject = new MovieClip();
 			for(var i:uint = 0; i < 9; i++){
@@ -135,23 +154,23 @@ package com.cw.controls.directoryUIs{
 				returnedObject.addChild (placementSprite);
 				placementArray.push(placementSprite);
 				addTheButtonEvents(i);
-			}
+			};
 			the_mcWidth = placementArray[4].width;
 			the_mcHeight = placementArray[4].height;
 			initStagePlacement(the_mcX, the_mcY);
 		}
-		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		// events
-		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		/**
+		 * iterative event addition
+		 */		
 		private function addTheButtonEvents(i:uint):void {
 			placementArray[i].addEventListener (MouseEvent.MOUSE_UP, placementTargetUp);
 			placementArray[i].addEventListener (MouseEvent.MOUSE_DOWN, placementTargetDown);
 			placementArray[i].addEventListener (MouseEvent.MOUSE_OUT, placementTargetOut);
 			placementArray[i].addEventListener (MouseEvent.MOUSE_OVER, placementTargetOver);
 		}
-		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		// set init placement of the display objects
-		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		/**
+		 * set init placement of the display objects
+		 */
 		private function initStagePlacement(the_mcX, the_mcY){
 			TweenMax.to (contentsArray[0], 0, { y:-the_mcHeight});
 			TweenMax.to (placementArray[0], 0, {alpha:.0, x:the_mcX-the_mcWidth, y:the_mcY, rotationX:179});
@@ -169,9 +188,9 @@ package com.cw.controls.directoryUIs{
 			TweenMax.to (placementArray[8], 0,{alpha:.0, y:the_mcY+the_mcHeight, x:the_mcX+the_mcWidth, rotationX:179});
 			TweenMax.to (placementArray[4], 2, {alpha:finalPlacementAlpha,x:the_mcX, y:the_mcY, z:0, rotationY:0, ease:Sine.easeInOut, onComplete:initOpenAnime});
 		}
-		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		// init the open animations
-		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		/**
+		 * init the open animations
+		 */		
 		private function initOpenAnime(){
 			for(var i:uint = 1; i <= 4; i++){
 				var addOpenItemIteration='addOpenItem'+String(i);
@@ -190,9 +209,9 @@ package com.cw.controls.directoryUIs{
 		private function addOpenItem4(){
 			TweenMax.to (placementArray[3], 1.1, {alpha:finalPlacementAlpha, rotationY:0, ease:Sine.easeInOut, onComplete:addOpenItem2_4}); 
 		}
-		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		// part two animations
-		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		/**
+		 * part two animations
+		 */		
 		private function addOpenItem1_2(){
 			TweenMax.to (placementArray[2], 1, {alpha:finalPlacementAlpha, rotationY:0, ease:Sine.easeOut});
 		}
@@ -205,9 +224,9 @@ package com.cw.controls.directoryUIs{
 		private function addOpenItem2_4(){
 			TweenMax.to (placementArray[0], 1.4, {alpha:finalPlacementAlpha, rotationX:0, ease:Sine.easeOut});
 		}
-		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		// event actions
-		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		/**
+		 * event actions
+		 */		
 		private function placementTargetOver(overEvent:Event){
 			overEvent.currentTarget.parent.setChildIndex(overEvent.currentTarget, overEvent.currentTarget.parent.numChildren - 1);
 			buttonStates.buttonStatesInterface(overEvent.currentTarget as Sprite, 'OverState');
@@ -222,10 +241,11 @@ package com.cw.controls.directoryUIs{
 			buttonStates.buttonStatesInterface(upEvent.currentTarget as Sprite, 'UpState');
 			getClickedItem(upEvent);
 		}
-		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		// add clicked item
-		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		/**
+		 * add clicked item
+		 */		
 		private function getClickedItem(upEvent:Event):void {
+			TweenMax.to (sectionHeaderTextHolder, .5, {alpha:.7, y:-152, z:-25, ease:Sine.easeInOut});
 			for(var i:uint = 0; i < placementArray.length; i++){
 				if(upEvent.currentTarget.name == placementArray[i].name){
 					var currentItem:Object = upEvent.currentTarget;
@@ -243,14 +263,12 @@ package com.cw.controls.directoryUIs{
 			var yPlacement:int = 20
 			TweenMax.to (itemViewHolder, 0,{x:xPlacement, y:yPlacement});
 			returnedObject.addChild(itemViewHolder);
-			itemViewHolder.addEventListener ( MouseEvent.MOUSE_UP, closeButtonUp, false);
+			theItemView.closeButtonHolder.addEventListener ( MouseEvent.MOUSE_UP, closeButtonUp, false);
 		}
 		private function closeButtonUp(upEvent:Event){
-			upEvent.currentTarget.parent.parent.parent.setChildIndex(upEvent.currentTarget.parent.parent, upEvent.currentTarget.parent.parent.parent.numChildren - 1);
 			if(upEvent.currentTarget == theItemView.closeButtonHolder) {
-				TweenMax.to (returnedObject, .5, {alpha:0, z:0, visible:false});
+				TweenMax.to (sectionHeaderTextHolder, .5, {alpha:1, y:-105, z:0, ease:Sine.easeOut});
 			}
 		}
 	}
 }
-
