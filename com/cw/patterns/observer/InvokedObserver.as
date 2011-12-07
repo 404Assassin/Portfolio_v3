@@ -24,11 +24,12 @@ package com.cw.patterns.observer{
 		public function InvokedObserver(){
 			observers = new Array();
 		}
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		// Public Interfaces
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		/**
-		 * :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		 * Adds an observer to the list of observers. The param 'observer' 
 		 * being a 'this' ref of the observering class to be added.
-		 * :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		 */
 		public function addObserver (observer:IInvokedObserver):void {
 			if (observers.indexOf(observer) == -1) {
@@ -36,10 +37,8 @@ package com.cw.patterns.observer{
 			}
 		}
 		/**
-		 * :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		 * Removes an observer from the list of observers. The param 'observer' 
 		 * being a 'this' ref of the observering class to be removed.
-		 * :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		 */
 		public function removeObserver (observer:IInvokedObserver):void {
 			var arrayPosition = observers.indexOf(observer);
@@ -48,10 +47,8 @@ package com.cw.patterns.observer{
 			}
 		}
 		/**
-		 * :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		 * Notify all observers that the subject has changed and pass the 
 		 * infoObj param.
-		 * :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		 */
 		public function notifyObservers (infoObj:Object):void {
 			var observersSnapshot:Array = observers.slice(0);
@@ -60,17 +57,13 @@ package com.cw.patterns.observer{
 			}
 		}
 		/**
-		 * :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		 * Clears all observers from the array
-		 * :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		 */
 		public function clearObservers ():void {
 			observers = new Array();
 		}
 		/**
-		 * :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		 * Returns the number of observers for this subject.
-		 * :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		 */
 		public function countObservers ():Number {
 			return observers.length;
