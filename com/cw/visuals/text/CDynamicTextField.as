@@ -13,28 +13,18 @@ package com.cw.visuals.text{
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	// Imports
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	import com.cw.patterns.observer.IInvokedObserver;
 	import com.cw.patterns.observer.InvokedObserver;
-	import com.cw.visuals.tweenStates.ButtonStates;
 	import com.cw.visuals.shapeCreators.CreateShape;
 	import com.greensock.TweenMax;
-	import com.greensock.loading.*;
-	import flash.display.MovieClip;
+	import com.greensock.loading.LoaderMax;
 	import flash.display.Sprite;
-	import flash.events.Event;
-	import flash.events.MouseEvent;
-	import flash.events.EventPhase;
-	import flash.filters.DropShadowFilter;
-	import flash.net.URLLoader;
-	import flash.net.URLRequest;
 	import flash.text.AntiAliasType;
-	import flash.text.StyleSheet;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	// Class
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	public class CDynamicTextField{
+	public class CDynamicTextField implements ICDynamicTextField {
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Private Variables
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -45,8 +35,12 @@ package com.cw.visuals.text{
 		private var textHorizontalOffset:Number = 4;
 		private var textVerticalOffset:Number = 2;
 		private var textContent:String
-		private var textFieldHeight:uint
 		private var textFieldWidth:uint
+		private var textFieldHeight:uint
+		private var textFieldBackground:Boolean
+		private var textFieldBackgroundColor:uint
+		private var textFieldMultiline:Boolean
+		private var textFieldWordWrap:Boolean
 		private var xPlacement:int;
 		private var yPlacement:int;
 		private var dynamicButtonObserver:InvokedObserver
@@ -63,10 +57,14 @@ package com.cw.visuals.text{
 		 * Dynamic text field interfaces for composition 
 		 * ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		 */
-		public function textFieldInterface(textContent:String, textFieldWidth:uint, textFieldHeight:uint):void{
+		public function textFieldInterface(textContent:String, textFieldWidth:uint, textFieldHeight:uint, textFieldBackground:Boolean, textFieldBackgroundColor:uint, textFieldMultiline:Boolean, textFieldWordWrap:Boolean):void{
 			this.textContent = textContent;
 			this.textFieldWidth = textFieldWidth
 			this.textFieldHeight = textFieldHeight
+			this.textFieldBackground = textFieldBackground;
+			this.textFieldBackgroundColor = textFieldBackgroundColor;
+			this.textFieldMultiline = textFieldMultiline;
+			this.textFieldWordWrap = textFieldWordWrap;
 			this.textHorizontalOffset = textHorizontalOffset;
 			this.textVerticalOffset = textVerticalOffset;
 			textFieldHolder()
@@ -84,7 +82,7 @@ package com.cw.visuals.text{
 		private function textFieldBGHolder():void {
 			theTextFieldBGHolder = new Sprite();
 			var theShapeCreator:CreateShape = new CreateShape();
-			theShapeCreator.draw(CreateShape.SQUARE_FILLED, theTextFieldBGHolder, 0, 0, 100, 100)
+			theShapeCreator.draw(CreateShape.SQUARE_FILLED, theTextFieldBGHolder, 0, 0, 20, 20)
 			TweenMax.to (theTextFieldBGHolder, 0, {alpha:.5, tint:0xFFFFFF});
 			//theTextFieldBGHolder.filters = [new DropShadowFilter(2, 45, 0x000000, 1, 2, 2, 1, 2, true, true, false)];
 			theTextFieldHolder.addChild(theTextFieldBGHolder);
@@ -93,12 +91,12 @@ package com.cw.visuals.text{
 		private function addTextFieldText():void{
 			var textField:TextField = new TextField();
 			textField.embedFonts = false;
-			textField.background = true;
-			textField.backgroundColor = 0xFFFFFF;
+			textField.background = textFieldBackground;
+			textField.backgroundColor = textFieldBackgroundColor;
 			textField.width = textFieldWidth - textHorizontalBuffer;
 			textField.height = textFieldHeight - textVerticalBuffer;
-			textField.multiline = true;
-			textField.wordWrap = true;
+			textField.multiline = textFieldMultiline;
+			textField.wordWrap = textFieldWordWrap;
 			textField.autoSize = TextFieldAutoSize.NONE;
 			textField.antiAliasType = AntiAliasType.ADVANCED; 
 			textField.styleSheet = LoaderMax.getContent("flashStyleSheet");;
@@ -122,4 +120,3 @@ package com.cw.visuals.text{
 		}
 	}
 }
-
