@@ -15,24 +15,12 @@ package com.cw.visuals.contentArea{
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	import com.cw.controls.dynamicButton.CDynamicButton;
 	import com.cw.data.javascript.Shadowbox;
-	import com.cw.utilities.preloaders.CFourBarPreloader;
-	import com.cw.visuals.flipOpen3D.CFlipOpen3Dv1;
-	import com.cw.visuals.flipOpen3D.CFlipOpen3Dv2;
 	import com.cw.visuals.flipOpen3D.CFlipOpen3Dv3;
-	import com.cw.visuals.flipOpen3D.CFlipOpen3Dv5;
 	import com.cw.visuals.shapeCreators.CreateShape;
 	import com.cw.visuals.text.CDynamicTextField;
 	import com.greensock.TweenMax;
-	import com.greensock.easing.Bounce;
-	import com.greensock.easing.Elastic;
 	import com.greensock.easing.Sine;
-	import com.greensock.events.TweenEvent;
-	import com.greensock.events.LoaderEvent;
-	import com.greensock.loading.ImageLoader;
 	import com.greensock.loading.LoaderMax;
-	import com.greensock.loading.XMLLoader;
-	import com.greensock.loading.data.LoaderMaxVars;
-	
 	import flash.display.Bitmap;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
@@ -41,9 +29,6 @@ package com.cw.visuals.contentArea{
 	import flash.events.Event;
 	import flash.events.FullScreenEvent;
 	import flash.events.MouseEvent;
-	import flash.external.ExternalInterface;
-	import flash.geom.Point;
-	import flash.geom.Rectangle;
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	// Class
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -57,16 +42,13 @@ package com.cw.visuals.contentArea{
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		private var currentItem:Object;
 		private var itemBackgroundHolder:MovieClip;
-		private var displayContainer:MovieClip;
 		private var stageReference:Stage;
 		private var stageWidth:int;
 		private var stageHeight:int;
-		private var imageName:String/* = 'ph_'*/;
+		private var imageName:String;
 		private var returnedObject:Sprite = new Sprite();
-		private var section:String;
 		private var sectionIteration:int;
 		private var sectionName:String;
-		private var theCFourBarPreloader:CFourBarPreloader;
 		private var sampleImage:String;
 		private var backgroundWidth:Number;
 		private var backgroundHeight:Number;
@@ -112,38 +94,6 @@ package com.cw.visuals.contentArea{
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Private Methods
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		// Keep incase we want to add an individual item DL here.
-		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		/*		private function createName():void {
-		section = sectionName + sectionIteration;
-		loadExternalAssets();
-		}
-		private function loadExternalAssets():void{
-		addProgressBar()
-		LoaderMax.activate([ImageLoader]);
-		var sectionQueue:LoaderMax = new LoaderMax({name:section, onProgress:progressHandler, onComplete:completeHandler});
-		sectionQueue.append( new XMLLoader("./xml/siteAssets.xml", {name:"xmlSiteAssets"}) );
-		sectionQueue.load();
-		}
-		private function addProgressBar():void {
-		theCFourBarPreloader = new CFourBarPreloader();
-		theCFourBarPreloader.setTheProgressBars();
-		var preloaderHolder:Sprite = theCFourBarPreloader.getTheProgressBars();
-		returnedObject.addChild(preloaderHolder);
-		var barPlacementX:int = stageWidth * .5;
-		var barPlacementY:int = stageHeight * .5;
-		TweenMax.to (returnedObject, 0, {alpha:1, x:0, y:0});
-		}
-		private function progressHandler(loaderEvent:LoaderEvent):void {
-		trace("@ ItemView.progressHandler(loaderEvent) "+ loaderEvent.target.progress);
-		theCFourBarPreloader.progressHandlerInterface(loaderEvent);
-		}
-		private	function completeHandler(event:LoaderEvent):void {
-		trace("@ ItemView.completeHandler(event) "+ event);
-		theCFourBarPreloader.progressCompleteInterface();
-		addItemView();
-		}*/
 		private function setImageName():void {
 			sampleImage = sectionName + sectionIteration + '_'+ '0';
 			theImage = LoaderMax.getContent(sampleImage).rawContent;
@@ -194,7 +144,7 @@ package com.cw.visuals.contentArea{
 			var startWidth:Number = currentItem.width;
 			var startHeight:Number = currentItem.height;
 			TweenMax.to (itemBackgroundHolder, 0, {alpha:.1, x:startX, y:startY, width:startWidth, height:startHeight});
-			TweenMax.to (itemBackgroundHolder, .5, {alpha:.5, x:-backgroundX, y:-backgroundY, z:-25, width:backgroundWidth, height:backgroundHeight, dropShadowFilter:{color:0x000000, alpha:.5, blurX:15, blurY:15, distance:25}, ease:Sine.easeOut, 
+			TweenMax.to (itemBackgroundHolder, .2, {alpha:.5, x:-backgroundX, y:-backgroundY, z:-25, width:backgroundWidth, height:backgroundHeight, dropShadowFilter:{color:0x000000, alpha:.5, blurX:15, blurY:15, distance:25}, ease:Sine.easeOut, 
 				onComplete:addItemView
 			});
 		}
@@ -233,7 +183,7 @@ package com.cw.visuals.contentArea{
 			TweenMax.to (closeButton, 0, {alpha:1, x:closeButtonX, y:closeButtonY, z:buttonZ, dropShadowFilter:{color:0x000000, alpha:.5, blurX:5, blurY:5, distance:5}});
 			closeButtonHolder.addChild(closeButton);
 			returnedObject.addChild(closeButtonHolder);
-			closeButton.addEventListener (MouseEvent.MOUSE_UP, closeButtonUp);
+			closeButtonHolder.addEventListener (MouseEvent.MOUSE_UP, closeButtonUp);
 		}
 		private function closeButtonUp(upEvent:Event){
 			TweenMax.to (returnedObject, 1.25, {alpha:0, z:100, visible:false, onComplete:destroy});
@@ -277,20 +227,28 @@ package com.cw.visuals.contentArea{
 		private function aboutButtonUp(upEvent:Event):void{
 			var aboutTextRef:String = sectionName + 'AboutText' + sectionIteration;
 			theCDynamicTextField = new CDynamicTextField();
-			theCDynamicTextField.textFieldInterface(theButtonText(aboutTextRef), 320, 320);
+			theCDynamicTextField.textFieldInterface(theButtonText(aboutTextRef), 320, 320, true, 0xFFFFFF, true, true);
 			var aboutTextField = theCDynamicTextField.getTheTextField();
 			var aboutTextFieldX = itemBackgroundHolder.x;
 			var aboutTextFieldY = itemBackgroundHolder.y;
 			TweenMax.to (aboutTextField, 0, {alpha:0, x:aboutTextFieldX, y:aboutTextFieldY, z:0});
 			TweenMax.to (aboutTextField, 1, {alpha:1, x:aboutTextFieldFinalX, y:aboutTextFieldY, z:-30, dropShadowFilter:{color:0x000000, alpha:.5, blurX:5, blurY:5, distance:5}, ease:Sine.easeOut, onComplete:reset3DTransform, onCompleteParams:[aboutTextField]});
 			returnedObject.addChild(aboutTextField);
+			moveToTheTop();
+		}
+		/**
+		 * Move this obgects container to the top of the display stack. Needed 
+		 * if there are multiple instances that overlap.
+		 */
+		private function moveToTheTop():void{
+			returnedObject.parent.parent.parent.setChildIndex(returnedObject.parent.parent, returnedObject.parent.parent.parent.numChildren - 1);
 		}
 		private function reset3DTransform(targetSprite:Sprite):void {
 			//trace(targetSprite);
 			//targetSprite.transform.matrix3D = null;
 		}
 		/**
-		 * Method for returning button text. Pass it a refrence of the nodes 'name'
+		 * Method for returning button text. Pass it a refrence of the nodes 'name'.
 		 */
 		private function theButtonText(nodeName:String):String {
 			var buttonContent:LoaderMax = LoaderMax.getLoader(nodeName);
@@ -305,4 +263,3 @@ package com.cw.visuals.contentArea{
 		}
 	}
 }
-
