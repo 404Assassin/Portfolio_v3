@@ -15,12 +15,9 @@ package com.cw.utilities.preloaders{
 	import com.cw.math.RatioConversion;
 	import com.cw.stageAlignments.StageResize;
 	import com.greensock.TweenMax;
-	import com.greensock.easing.Linear;
 	import com.greensock.easing.Sine;
 	import com.greensock.events.LoaderEvent;
-	import flash.display.Sprite;
 	import flash.display.MovieClip;
-	import flash.display.Shape;
 	import flash.display.Stage;
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	// Class characteristics
@@ -71,6 +68,11 @@ package com.cw.utilities.preloaders{
 			placementTarget.addChild(theProgressBars);
 			TweenMax.to (theProgressBars, 2, {alpha:1, ease:Sine.easeOut});
 		}
+		/**
+		 * Useing a ratio conversion let's chop up the progress percentage 
+		 * into four pieces and animate the individual bars.
+		 * 
+		 */		
 		private function progressHandler(loaderEvent:LoaderEvent):void {
 			var theRatioConversion:RatioConversion = new RatioConversion();
 			if(loaderEvent.target.progress <= .25){
