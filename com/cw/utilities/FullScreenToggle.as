@@ -1,12 +1,16 @@
 package com.cw.utilities{
-	/*
-	-=] Full Screen Toggle - make sure to set HTML Embed/Object :: allowfullscreen = "true"; :: [=-
-	-=] language version ActionScript 3.0 [=-
-	-=] player version Flash 10.0 [=-
-	-=] author Christian Worley [=-
-	-=] created 08/2011 [=-
-	-=] TODO;  [=-
-	*/
+	/**
+	 * :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	 * Class discription: Full Screen Toggle - make sure to set HTML 
+	 * Embed/Object :: allowfullscreen = "true";
+	 * language version: ActionScript 3.0
+	 * player version: Flash 10.0
+	 * author: christian
+	 * contact: christian@worleydev.com
+	 * created: 08/2011
+	 * TODO; 
+	 * :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	 */
 	//:::::::::::::::::::::::::::::::::::::::::::::::::
 	// Imports
 	//:::::::::::::::::::::::::::::::::::::::::::::::::
