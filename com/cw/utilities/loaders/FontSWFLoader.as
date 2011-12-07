@@ -16,19 +16,13 @@ package com.cw.utilities.loaders{
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	import com.cw.patterns.observer.IInvokedObserver;
 	import com.cw.patterns.observer.InvokedObserver;
-	import com.cw.utilities.loaders.FontSWFLoader;
 	import com.cw.utilities.loaders.swfExplorer.SWFExplorer;
-	import com.cw.utilities.loaders.swfExplorer.events.SWFExplorerErrorEvent;
 	import com.cw.utilities.loaders.swfExplorer.events.SWFExplorerEvent;
-	
 	import flash.display.Loader;
-	import flash.events.Event;
-	import flash.events.EventDispatcher;
 	import flash.events.ProgressEvent;
 	import flash.net.URLRequest;
 	import flash.system.ApplicationDomain;
 	import flash.text.Font;
-	import flash.utils.getDefinitionByName;
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	// Class characteristics
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -87,22 +81,16 @@ package com.cw.utilities.loaders{
 		private function loadProgress(event:ProgressEvent):void {
 			var percentLoaded:Number = event.bytesLoaded/event.bytesTotal;
 			percentLoaded = Math.round(percentLoaded * 100);
-			//trace("Loading font: "+percentLoaded+"%");
 		}
 		private function assetsReady (explorerEvent:SWFExplorerEvent):void{
 			var domain:ApplicationDomain = explorer.contentLoaderInfo.applicationDomain;
-/*			//trace('>>>>>>>>>>>>>>>>>>SWFExplorer e.definitions returns '+ explorerEvent.definitions );
-			//trace('>>>>>>>>>>>>>>>>>>SWFExplorer e.target.getDefinitions returns '+  explorerEvent.target.getDefinitions() );
-			//trace('>>>>>>>>>>>>>>>>>>SWFExplorer e.target.getTotalDefinitions returns '+  explorerEvent.target.getTotalDefinitions() );
-			//trace('>>>>>>>>>>>>>>>>>>SWFExplorer explorerEvent.target[0] returns '+  explorerEvent.definitions[0]);
-			//trace('>>>>>>>>>>>>>>>>>>what is = fontSWFLoader.contentLoaderInfo '+  domain);*/
 			var fontClass:Class;
 			for (var i:int = 0; i < explorerEvent.target.getTotalDefinitions(); i++){
 				fontClass = domain.getDefinition(explorerEvent.definitions[i]) as Class;
 				Font.registerFont(fontClass);
 			}
-			//fontCheck();
 			fontLoadObserver.notifyObservers('fonts are loaded');
+			fontCheck();
 		}
 		/**
 		 * :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -110,14 +98,13 @@ package com.cw.utilities.loaders{
 		 * :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		 */
 		private function fontCheck(){
-			//var fonts:Array = Font.enumerateFonts();
 			fonts = Font.enumerateFonts();
 			for (var i:int = 0; i < fonts.length; i++){
-				trace(fonts[i].fontName + " - " + fonts[i].fontStyle + " - " + fonts[i].fontType);
+				trace('fonts loaded:\n' + fonts[i].fontName + " - " + fonts[i].fontStyle + " - " + fonts[i].fontType);
 			}
 		}
 		public function update(theObserver:InvokedObserver, infoObject:Object):void {
-			trace('@ FontSWFLoader' + InvokedObserver + ' ' + infoObject);
+			//trace('@ FontSWFLoader' + InvokedObserver + ' ' + infoObject);
 		}
 	}
 }
