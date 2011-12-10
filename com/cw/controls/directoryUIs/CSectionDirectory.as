@@ -163,7 +163,9 @@ package com.cw.controls.directoryUIs{
 		 * iterative event addition
 		 */		
 		private function addTheButtonEvents(i:uint):void {
-			placementArray[i].addEventListener (MouseEvent.MOUSE_UP, placementTargetUp);
+			placementArray[i].doubleClickEnabled = true;
+			//placementArray[i].addEventListener (MouseEvent.MOUSE_UP, placementTargetUp);
+			placementArray[i].addEventListener (MouseEvent.CLICK, placementTargetUp);
 			placementArray[i].addEventListener (MouseEvent.MOUSE_DOWN, placementTargetDown);
 			placementArray[i].addEventListener (MouseEvent.MOUSE_OUT, placementTargetOut);
 			placementArray[i].addEventListener (MouseEvent.MOUSE_OVER, placementTargetOver);
