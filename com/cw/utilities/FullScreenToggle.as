@@ -11,30 +11,28 @@ package com.cw.utilities{
 	 * TODO; 
 	 * :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	 */
-	//:::::::::::::::::::::::::::::::::::::::::::::::::
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	// Imports
-	//:::::::::::::::::::::::::::::::::::::::::::::::::
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.display.StageDisplayState;
 	import flash.events.MouseEvent;
-	//:::::::::::::::::::::::::::::::::::::::::::::::::
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	// Class characteristics
-	//:::::::::::::::::::::::::::::::::::::::::::::::::
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	public class FullScreenToggle implements IFullScreenToggle{
-		//:::::::::::::::::::::::::::::::::::::::::::::::::
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Private Variables
-		//:::::::::::::::::::::::::::::::::::::::::::::::::
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		private var theStageReference:Stage;
-		//:::::::::::::::::::::::::::::::::::::::::::::::::
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Constructor
-		//:::::::::::::::::::::::::::::::::::::::::::::::::
-		public function FullScreenToggle(){
-			//trace('what is PortfolioMain.swfStage '+PortfolioMain.swfStage);
-		}
-		//:::::::::::::::::::::::::::::::::::::::::::::::::
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		public function FullScreenToggle(){};
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// adds the fullScreenEventListener and pass it the targeted object and a stage reference
-		//:::::::::::::::::::::::::::::::::::::::::::::::::
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		public function fullScreenEventListener(eventTarget:Sprite, stageReference:Stage):void{
 			theStageReference = stageReference;
 			eventTarget.addEventListener(MouseEvent.CLICK, handleClickEvent)
