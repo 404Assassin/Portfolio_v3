@@ -82,17 +82,14 @@ package com.cw.controls.dynamicButton{
 			var css:StyleSheet = new StyleSheet();
 			css.parseCSS(URLLoader(event.target).data);
 		}
-		private function addButtonText(/*css:StyleSheet*/):void{
-			
+		private function addButtonText():void{
 			var textField:TextField = new TextField();
 			textField.embedFonts = false;
 			textField.autoSize = TextFieldAutoSize.CENTER;
 			textField.antiAliasType = AntiAliasType.ADVANCED; 
 			textField.styleSheet = LoaderMax.getContent("flashStyleSheet");;
 			textField.htmlText = textContent;
-			
 			button.buttonText.addChild(textField);
-			
 			var dropShadow:DropShadowFilter = new DropShadowFilter();dropShadow.distance = 0;
 			dropShadow.angle = 45;
 			dropShadow.color = 0x000000;
@@ -104,7 +101,6 @@ package com.cw.controls.dynamicButton{
 			dropShadow.inner = true;
 			dropShadow.knockout = true;
 			dropShadow.hideObject = false; 
-			//button./*buttonText.*/filters = new Array(dropShadow); 
 			button.buttonText.filters = [new DropShadowFilter(5, 45, 0x000000, 1, 5, 5, 1, 2, true, true, false)]; 
 
 			resizeButtonMCs(textField);
@@ -119,59 +115,49 @@ package com.cw.controls.dynamicButton{
 		private function centerTextWithBackground(textField:TextField):void{
 			var totalButtonWidth:int = textField.textWidth + textHorizontalBuffer;
 			var totalTextWidth:int = textField.textWidth;
-			//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-			// Use the below line for LEFT-justified text fields
-			//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-			//textField.x = (totalButtonWidth - (totalTextWidth+textHorizontalOffset))*.5;
 			textField.x =- (totalTextWidth+textHorizontalOffset) * .5;
 			var totalButtonHeight:int = textField.textHeight;
 			var totalTextHeight:int = textField.textHeight;
 			textField.y =- ((totalTextHeight+textVerticalOffset) - (totalTextHeight + textVerticalBuffer))*.5;
 			addTheButtonEvents();
+			//handleMouseEvents(null);
 		}
 		private function addTheButtonEvents():void {
 			button.buttonTarget.buttonMode = true;
-			button.buttonTarget.addEventListener (MouseEvent.MOUSE_UP, placementTargetUp);
+			button.buttonTarget.doubleClickEnabled = true;
+			button.buttonTarget.addEventListener (MouseEvent.CLICK, placementTargetUp);
 			button.buttonTarget.addEventListener (MouseEvent.MOUSE_DOWN, placementTargetDown);
 			button.buttonTarget.addEventListener (MouseEvent.MOUSE_OUT, placementTargetOut);
 			button.buttonTarget.addEventListener (MouseEvent.MOUSE_OVER, placementTargetOver);
 			addToDisplay();
 		}
 		/**
-		 * ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		 *  ABSTRACT Method
 		 *  (the method should only be implemented in a subclass).
-		 * ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		 */
 		protected function placementTargetOver(overEvent:Event){
 			throw new IllegalOperationError('Abstract method: must be overridden in a subclass');
 			return null;
 		}
 		/**
-		 * ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		 *  ABSTRACT Method
 		 *  (the method should only be implemented in a subclass).
-		 * ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		 */
 		protected function placementTargetOut(outEvent:Event){
 			throw new IllegalOperationError('Abstract method: must be overridden in a subclass');
 			return null;
 		}
 		/**
-		 * ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		 *  ABSTRACT Method
 		 *  (the method should only be implemented in a subclass).
-		 * ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		 */
 		protected function placementTargetDown(downEvent:Event){
 			throw new IllegalOperationError('Abstract method: must be overridden in a subclass');
 			return null;
 		}
 		/**
-		 * ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		 *  ABSTRACT Method
 		 *  (the method should only be implemented in a subclass).
-		 * ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		 */
 		protected function placementTargetUp(upEvent:Event){
 			throw new IllegalOperationError('Abstract method: must be overridden in a subclass');
